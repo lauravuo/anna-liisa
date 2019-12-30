@@ -5,7 +5,7 @@ module.exports = {
     browser
       .url(url)
       .waitForElementVisible('body')
-      .assert.containsText('h1', 'TODO')
+      .assert.containsText('h1', 'anna-liisa')
       .end(),
   'Button test': browser => {
     const button = 'button';

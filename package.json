@@ -1,8 +1,8 @@
 {
-  "name": "TODO",
+  "name": "anna-liisa",
   "version": "1.0.0",
-  "description": "TODO",
-  "homepage": "https://lauravuo.github.io/react-project-template",
+  "description": "anna-liisa",
+  "homepage": "https://lauravuo.github.io/anna-liisa",
   "main": "src/index.js",
   "scripts": {
     "build": "rimraf build/ && webpack --config ./webpack/prod.js",
@@ -18,12 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "TODO"
+    "url": "https://github.com/lauravuo/anna-liisa"
   },
   "keywords": [
-    "TODO"
+    "library"
   ],
-  "author": "TODO",
+  "author": "lauravuo",
   "license": "MIT",
   "jest": {
     "testRegex": ".*\\.test\\.js$",
@@ -36,7 +36,9 @@
   "dependencies": {
     "@babel/runtime": "7.7.7",
     "connected-react-router": "6.6.1",
+    "grommet": "2.9.0",
     "history": "4.10.1",
+    "polished": "3.4.2",
     "prop-types": "15.7.2",
     "react": "16.12.0",
     "react-dom": "16.12.0",

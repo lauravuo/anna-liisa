@@ -38,7 +38,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'TODO',
+      title: 'Anna-Liisa',
       template: './webpack/template.html'
     }),
     new webpack.DefinePlugin({ CONFIG: JSON.stringify(require('config')) })
