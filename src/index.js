@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { Route, Switch } from 'react-router'; // react-router v4/v5
 import { ConnectedRouter } from 'connected-react-router';
 import { Grommet } from 'grommet';
+import firebase from 'firebase/app';
 
 import configureStore, { history } from './store';
 
@@ -14,15 +15,25 @@ import Error from './containers/error';
 import Home from './containers/home';
 import Page from './containers/page';
 import theme from './theme';
+import { setUser } from './store/actions';
 
 const store = configureStore();
+
+firebase.initializeApp(CONFIG.firebaseConfig);
+
+const LoginContainer = connect(
+  () => ({}),
+  dispatch => ({
+    onUserLogin: user => dispatch(setUser(user))
+  })
+)(Login);
 
 const Root = () => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Grommet theme={theme}>
         {theme !== null ? (
-          <Login />
+          <LoginContainer />
         ) : (
           <div>
             <Error />

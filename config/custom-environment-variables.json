@@ -1,0 +1,12 @@
+{
+  "firebaseConfig": {
+    "apiKey": "FB_CONF_API_KEY",
+    "authDomain": "FB_CONF_AUTH_DOMAIN",
+    "databaseURL": "FB_CONF_DATABASE_URL",
+    "projectId": "FB_CONF_PROJECT_ID",
+    "storageBucket": "FB_CONF_STORAGE_BUCKET",
+    "messagingSenderId": "FB_CONF_MESSAGING_SENDER_ID",
+    "appId": "FB_CONF_APP_ID",
+    "measurementId": "FB_CONF_MEASUREMENT_ID"
+  }
+}
