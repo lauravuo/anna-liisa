@@ -2,20 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import Button from '../components/button';
 import { buttonPress } from '../store/actions';
 
-const Home = ({ buttonIsPressed, doButtonPress }) => (
-  <Button pressed={buttonIsPressed} onPress={doButtonPress} />
-);
+const Home = () => <div />;
 
 Home.propTypes = {
-  buttonIsPressed: PropTypes.bool.isRequired,
-  doButtonPress: PropTypes.func.isRequired
+  user: PropTypes.object
 };
 
-const mapStateToProps = ({ button: { pressed } }) => ({
-  buttonIsPressed: pressed
+Home.defaultProps = {
+  user: null
+};
+
+const mapStateToProps = ({ user }) => ({
+  user
 });
 
 const mapDispatchToProps = dispatch => ({
