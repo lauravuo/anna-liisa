@@ -40,6 +40,7 @@
     "firebase": "7.6.1",
     "firebaseui": "4.4.0",
     "grommet": "2.9.0",
+    "grommet-icons": "^4.4.0",
     "history": "4.10.1",
     "polished": "3.4.2",
     "prop-types": "15.7.2",

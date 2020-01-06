@@ -14,7 +14,7 @@ import NavBar from './components/nav-bar';
 import NoMatch from './components/no-match';
 import Error from './containers/error';
 import Home from './containers/home';
-import Page from './containers/page';
+import Details from './containers/details';
 import theme from './theme';
 import { setUser } from './store/actions';
 
@@ -40,7 +40,7 @@ const UI = ({ user }) => (
           <NavBar />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/page" component={Page} />
+            <Route path="/:challenge/:index" component={Details} />
             <Route component={NoMatch} />
           </Switch>
         </Box>

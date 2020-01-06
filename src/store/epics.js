@@ -2,7 +2,7 @@ import { empty, of, from } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import { map, mergeMap, switchMap, catchError } from 'rxjs/operators';
 import { combineEpics, ofType } from 'redux-observable';
-import { LOCATION_CHANGE } from 'connected-react-router';
+import { push } from 'connected-react-router';
 
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
@@ -21,7 +21,8 @@ import {
   SET_MODEL,
   SET_USER,
   SET_CHALLENGES,
-  CREATE_CHALLENGE_FULFILLED
+  CREATE_CHALLENGE_FULFILLED,
+  SELECT_INDEX
 } from './actions';
 
 const defaultModel = CONFIG.modelId;
@@ -124,9 +125,16 @@ const createChallengeEpic = (action$, state$) =>
     catchError(error => of(operationRejected(CREATE_CHALLENGE, error)))
   );
 
+const selectIndexEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(SELECT_INDEX),
+    map(action => push(`/${state$.value.challenges.current}/${action.payload}`))
+  );
+
 export default combineEpics(
   initModelEpic,
   initChallengesEpic,
   fetchUserEpic,
-  createChallengeEpic
+  createChallengeEpic,
+  selectIndexEpic
 );

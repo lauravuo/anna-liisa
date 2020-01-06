@@ -60,3 +60,10 @@ export const operationRejected = (actionType, payload) => ({
   actionType,
   payload
 });
+
+export const SELECT_INDEX = 'SELECT_INDEX';
+
+export const selectIndex = payload => ({
+  type: SELECT_INDEX,
+  payload
+});

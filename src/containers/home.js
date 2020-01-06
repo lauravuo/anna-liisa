@@ -4,10 +4,15 @@ import PropTypes from 'prop-types';
 
 import { Box, Button, Tab, Tabs } from 'grommet';
 
-import { buttonPress, createChallenge } from '../store/actions';
+import { buttonPress, createChallenge, selectIndex } from '../store/actions';
 import Challenge from '../components/challenge';
 
-const Home = ({ doCreateChallenge, challenges: { all, current }, model }) => (
+const Home = ({
+  doCreateChallenge,
+  challenges: { all, current },
+  model,
+  doSelectIndex
+}) => (
   <Box gap="small" fill="horizontal" align="center">
     <Button label="Create challenge" onClick={doCreateChallenge} />
     <Button label="Join challenge" />
@@ -15,7 +20,7 @@ const Home = ({ doCreateChallenge, challenges: { all, current }, model }) => (
       <Tabs>
         {all.map(challenge => (
           <Tab key={challenge.id} title={challenge.name}>
-            <Challenge challenge={model} />
+            <Challenge challenge={model} onClickIndex={doSelectIndex} />
           </Tab>
         ))}
       </Tabs>
@@ -35,7 +40,8 @@ const mapStateToProps = ({ challenges, model }) => ({
 
 const mapDispatchToProps = dispatch => ({
   doButtonPress: () => dispatch(buttonPress()),
-  doCreateChallenge: () => dispatch(createChallenge())
+  doCreateChallenge: () => dispatch(createChallenge()),
+  doSelectIndex: index => dispatch(selectIndex(index))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
