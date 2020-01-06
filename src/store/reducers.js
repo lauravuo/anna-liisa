@@ -5,7 +5,10 @@ import {
   BUTTON_PRESSED,
   FETCH_USER_FULFILLED,
   FETCH_USER_REJECTED,
-  SET_USER
+  SET_USER,
+  CREATE_CHALLENGE_FULFILLED,
+  SET_MODEL,
+  SET_CHALLENGES
 } from './actions';
 import initialState from './initial-state';
 
@@ -29,6 +32,35 @@ export const user = (state = initialState.user, action) => {
   }
 };
 
+export const challenges = (state = initialState.challenges, action) => {
+  switch (action.type) {
+    case SET_CHALLENGES: {
+      const count = action.payload.length;
+      return {
+        current: count > 0 ? action.payload[count - 1].id : null,
+        all: action.payload
+      };
+    }
+    default:
+      return state;
+  }
+};
+
+export const model = (state = initialState.model, action) => {
+  switch (action.type) {
+    case SET_MODEL:
+      return Object.keys(action.payload).reduce(
+        (result, item) => [
+          ...result,
+          { nbr: item, name: action.payload[item] }
+        ],
+        []
+      );
+    default:
+      return state;
+  }
+};
+
 export const error = (state = initialState.error, action) => {
   switch (action.type) {
     case FETCH_USER_REJECTED:
@@ -43,5 +75,7 @@ export default history =>
     router: connectRouter(history),
     button,
     user,
+    challenges,
+    model,
     error
   });

@@ -7,6 +7,7 @@
   "scripts": {
     "build": "rimraf build/ && webpack --config ./webpack/prod.js",
     "ci:automerge": "circleci-automerge --filter=\"^greenkeeper/\"",
+    "model": "babel-node ./tools/parse-model",
     "start": "webpack-dev-server --open \"Google Chrome\" --config ./webpack/dev.js",
     "storybook": "start-storybook",
     "test": "npm run test:lint && npm run test:unit",
@@ -56,6 +57,7 @@
   "devDependencies": {
     "@babel/cli": "7.7.7",
     "@babel/core": "7.7.7",
+    "@babel/node": "7.7.7",
     "@babel/plugin-proposal-object-rest-spread": "7.7.7",
     "@babel/plugin-transform-runtime": "7.7.6",
     "@babel/preset-env": "7.7.7",

@@ -1,0 +1,51 @@
+1. Kirja on vanhempi kuin sinä
+2. Iloinen kirja
+3. Kirja, johon suhtaudut ennakkoluuloisesti
+4. Kirjan kannessa tai kuvauksessa on monta ihmistä
+5. Saamelaisen kirjailijan kirjoittama kirja
+6. Kirjan nimi alkaa ja päättyy samalla kirjaimella
+7. Kirjassa rikotaan lakia
+8. Kirja, jonka joku toinen valitsee puolestasi
+9. Kirjassa kohdataan pelkoja
+10. Kirja sijoittuu maahan, jossa on vähemmän asukkaita kuin Suomessa
+11. Vaihtoehtohistoria
+12. Kirjasta on tehty näytelmä tai ooppera
+13. Kirjassa eksytään
+14. Urheiluun liittyvä kirja
+15. Fiktiivinen kertomus, jossa mukana todellinen henkilö
+16. Kirjalla on kirjassa tärkeä rooli
+17. Tutkijan kirjoittama kirja
+18. Sinulle tuntematonta aihetta käsittelevä kirja
+19. Kirja, jota luet yhdessä jonkun kanssa
+20. Luonnon monimuotoisuutta käsittelevä kirja
+21. Pidät kirjan ensimmäisestä lauseesta
+22. Kirjassa on epäluotettava kertoja
+23. Kirja on julkaistu myös selkokielellä
+24. Kirja kirjailijalta, joka on kirjoittanut yli 20 kirjaa
+25. Kirjassa ollaan saarella
+26. Kirjailijan sukunimi alkaa kirjaimella X, Y, Z, Å, Ä tai Ö
+27. Runomuotoinen kertomus, runoelma tai säeromaani
+28. Tulevaisuudesta kertova kirja
+29. Japaniin liittyvä kirja tai sarjakuva
+30. Kirjassa pelastetaan ihminen
+31. Kirjassa kerrotaan elämästä maaseudulla
+32. Kirja on alun perin julkaistu kielellä, jota et osaa
+33. Kirjassa tapahtuu muodonmuutos
+34. Kirjan nimessä on luontoon liittyvä sana
+35. Kirjassa käytetään sosiaalista mediaa
+36. Tunnetun henkilön suosittelema kirja
+37. Ajankohta on merkittävä tekijä kirjassa
+38. Kirjan kannessa tai kuvauksessa on puu
+39. Kirjassa lennetään
+40. 2010-luvulla kuolleen kirjailijan kirjoittama kirja
+41. Kirjassa laitetaan ruokaa tai leivotaan
+42. Kirjassa on isovanhempia
+43. Kustantamon kirjasarjassa julkaistu kirja
+44. Kirjassa on kirjeenvaihtoa
+45. Esikoiskirja
+46. Kirjassa on sauna
+47. Kaksi kirjaa, joilla on hyvin samankaltaiset nimet
+48. Kaksi kirjaa, joilla on hyvin samankaltaiset nimet
+49. Vuonna 2020 julkaistu kirja
+50. Kirjaston henkilökunnan suosittelema kirja
+ 

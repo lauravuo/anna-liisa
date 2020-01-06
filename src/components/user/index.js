@@ -6,24 +6,23 @@ import styled from 'styled-components';
 export const RoundBox = styled(Box)`
   overflow: hidden;
   object-fit: cover;
-  border-radius: ${props => props.theme.global.edgeSize.xxsmall};
 `;
 
 const User = ({ user }) => (
-  <Box direction="row" align="end" gap="small" margin="small">
-    <Box>
-      <Text size="xsmall">Signed in as</Text>
-      <Text size="xsmall">{user.displayName}</Text>
-    </Box>
-    <RoundBox height="xxsmall" width="xxsmall">
+  <Box direction="row" align="center" gap="xsmall" margin="small">
+    <RoundBox height="xxsmall" width="xxsmall" round="xsmall">
       <Image fit="contain" src={user.photoURL} />
     </RoundBox>
+    {/*<Box>
+      <Text textAlign="start" size="xsmall">
+        {user.displayName}
+      </Text>
+    </Box>*/}
   </Box>
 );
 
 User.propTypes = {
-  name: PropTypes.string.isRequired,
-  location: PropTypes.string.isRequired
+  user: PropTypes.object.isRequired
 };
 
 export default User;

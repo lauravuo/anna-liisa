@@ -3,5 +3,11 @@ export default {
     pressed: false
   },
   user: null,
-  error: null
+  error: null,
+  challenges: {
+    current: null,
+    all: null
+  },
+  books: [],
+  model: null
 };

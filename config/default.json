@@ -1,5 +1,6 @@
 {
   "setting": "default-setting",
+  "modelId": "2020",
   "firebaseConfig": {
     "apiKey": "",
     "authDomain": "",

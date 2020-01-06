@@ -35,7 +35,7 @@ const UI = ({ user }) => (
   <Grommet theme={theme}>
     {user ? (
       <Box direction="row" fill="horizontal" justify="between">
-        <Box>
+        <Box fill="horizontal">
           <Error />
           <NavBar />
           <Switch>
