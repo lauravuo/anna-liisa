@@ -52,6 +52,13 @@ export const createChallenge = (name = 'TODO') => ({
   payload: name
 });
 
+export const JOIN_CHALLENGE = 'JOIN_CHALLENGE';
+
+export const joinChallenge = code => ({
+  type: JOIN_CHALLENGE,
+  payload: code
+});
+
 export const CREATE_CHALLENGE_FULFILLED = 'CREATE_CHALLENGE_FULFILLED';
 
 export const createChallengeFulfilled = payload => ({

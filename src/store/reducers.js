@@ -9,7 +9,8 @@ import {
   CREATE_CHALLENGE_FULFILLED,
   SET_MODEL,
   SET_CHALLENGES,
-  SET_CURRENT_CHALLENGE
+  SET_CURRENT_CHALLENGE,
+  JOIN_CHALLENGE_FULFILLED
 } from './actions';
 import initialState from './initial-state';
 
@@ -51,6 +52,15 @@ export const challenges = (state = initialState.challenges, action) => {
         current: {
           ...state.current,
           data: action.payload
+        }
+      };
+    }
+    case JOIN_CHALLENGE_FULFILLED: {
+      return {
+        ...state,
+        current: {
+          ...state.current,
+          id: action.payload
         }
       };
     }

@@ -11,13 +11,8 @@ export const RoundBox = styled(Box)`
 const User = ({ user }) => (
   <Box direction="row" align="center" gap="xsmall" margin="small">
     <RoundBox height="xxsmall" width="xxsmall" round="xsmall">
-      <Image fit="contain" src={user.photoURL} />
+      <Image title={user.displayName} fit="contain" src={user.photoURL} />
     </RoundBox>
-    {/*<Box>
-      <Text textAlign="start" size="xsmall">
-        {user.displayName}
-      </Text>
-    </Box>*/}
   </Box>
 );
 

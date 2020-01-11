@@ -4,11 +4,18 @@ import PropTypes from 'prop-types';
 
 import { Box, Button, Tab, Tabs } from 'grommet';
 
-import { buttonPress, createChallenge, selectIndex } from '../store/actions';
+import {
+  buttonPress,
+  createChallenge,
+  selectIndex,
+  joinChallenge
+} from '../store/actions';
 import Challenge from '../components/challenge';
+import Toolbar from '../components/toolbar';
 
 const Home = ({
   doCreateChallenge,
+  doJoinChallenge,
   challenges: { all, current },
   model,
   doSelectIndex
@@ -28,16 +35,19 @@ const Home = ({
         ))}
       </Tabs>
     )}
-    <Box direction="row" gap="medium">
-      <Button label="Create challenge" onClick={doCreateChallenge} />
-      <Button label="Join challenge" />
-    </Box>
+    <Toolbar
+      onCreateChallenge={doCreateChallenge}
+      onJoinChallenge={doJoinChallenge}
+    />
   </Box>
 );
 
 Home.propTypes = {
   challenges: PropTypes.object.isRequired,
-  model: PropTypes.arrayOf(PropTypes.object).isRequired
+  model: PropTypes.arrayOf(PropTypes.object).isRequired,
+  doCreateChallenge: PropTypes.func.isRequired,
+  doJoinChallenge: PropTypes.func.isRequired,
+  doSelectIndex: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ challenges, model }) => ({
@@ -47,7 +57,8 @@ const mapStateToProps = ({ challenges, model }) => ({
 
 const mapDispatchToProps = dispatch => ({
   doButtonPress: () => dispatch(buttonPress()),
-  doCreateChallenge: () => dispatch(createChallenge()),
+  doCreateChallenge: value => dispatch(createChallenge(value)),
+  doJoinChallenge: value => dispatch(joinChallenge(value)),
   doSelectIndex: index => dispatch(selectIndex(index))
 });
 
