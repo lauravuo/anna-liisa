@@ -19,8 +19,13 @@ const Home = ({
     {current && (
       <Tabs>
         {all.map(challenge => (
-          <Tab key={challenge.id} title={challenge.name}>
-            <Challenge challenge={model} onClickIndex={doSelectIndex} />
+          <Tab key={challenge} title={challenge}>
+            {current.data && (
+              <Challenge
+                challenge={current.data.model.entries}
+                onClickIndex={doSelectIndex}
+              />
+            )}
           </Tab>
         ))}
       </Tabs>

@@ -6,6 +6,7 @@ export default {
   error: null,
   challenges: {
     current: null,
+    // TODO: current id, current data
     all: null
   },
   books: [],

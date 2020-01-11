@@ -34,6 +34,13 @@ export const setChallenges = challenges => ({
   payload: challenges
 });
 
+export const SET_CURRENT_CHALLENGE = 'SET_CURRENT_CHALLENGE';
+
+export const setCurrentChallenge = challenge => ({
+  type: SET_CURRENT_CHALLENGE,
+  payload: challenge
+});
+
 export const SET_USER = 'SET_USER';
 
 export const setUser = user => ({ type: SET_USER, payload: user });

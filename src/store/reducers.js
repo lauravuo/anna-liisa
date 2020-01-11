@@ -8,7 +8,8 @@ import {
   SET_USER,
   CREATE_CHALLENGE_FULFILLED,
   SET_MODEL,
-  SET_CHALLENGES
+  SET_CHALLENGES,
+  SET_CURRENT_CHALLENGE
 } from './actions';
 import initialState from './initial-state';
 
@@ -37,8 +38,20 @@ export const challenges = (state = initialState.challenges, action) => {
     case SET_CHALLENGES: {
       const count = action.payload.length;
       return {
-        current: count > 0 ? action.payload[count - 1].id : null,
+        current: {
+          id: count > 0 ? action.payload[count - 1] : null,
+          data: null
+        },
         all: action.payload
+      };
+    }
+    case SET_CURRENT_CHALLENGE: {
+      return {
+        ...state,
+        current: {
+          ...state.current,
+          data: action.payload
+        }
       };
     }
     default:

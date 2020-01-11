@@ -18,9 +18,11 @@ import {
   operationRejected,
   setModel,
   setChallenges,
+  setCurrentChallenge,
   SET_MODEL,
   SET_USER,
   SET_CHALLENGES,
+  SET_CURRENT_CHALLENGE,
   CREATE_CHALLENGE_FULFILLED,
   SELECT_INDEX
 } from './actions';
@@ -56,21 +58,30 @@ const initChallengesEpic = (action$, state$) =>
         ? from(
             firebase
               .firestore()
-              .collection('challenges')
-              .where('owner', '==', state$.value.user.uid)
-              .where('model', '==', defaultModel)
-              .orderBy('created')
+              .doc(`users/${state$.value.user.uid}`)
               .get()
           ).pipe(
-            map(
-              querySnapshot =>
-                setChallenges(
-                  querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-                ),
-              catchError(error => of(operationRejected(SET_CHALLENGES, error)))
-            )
+            map(q => setChallenges(q.data().challenges)),
+            catchError(error => of(operationRejected(SET_CHALLENGES, error)))
           )
         : empty()
+    )
+  );
+
+const fetchChallengeEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(SET_CHALLENGES),
+    mergeMap(() =>
+      from(
+        firebase
+          .firestore()
+          .collection('challenges')
+          .doc(state$.value.challenges.current.id)
+          .get()
+      ).pipe(
+        map(q => setCurrentChallenge(q.data())),
+        catchError(error => of(operationRejected(SET_CURRENT_CHALLENGE, error)))
+      )
     )
   );
 
@@ -97,8 +108,18 @@ const createChallengeEpic = (action$, state$) =>
           .add({
             created: new Date(),
             owner: user.uid,
-            model: defaultModel,
+            model: {
+              id: defaultModel,
+              entries: state$.value.model
+            },
             participants: [user.uid],
+            users: {
+              [user.uid]: {
+                name: user.displayName,
+                thumbnail: user.photoURL,
+                books: []
+              }
+            },
             name: action.payload
           })
       );
@@ -128,7 +149,9 @@ const createChallengeEpic = (action$, state$) =>
 const selectIndexEpic = (action$, state$) =>
   action$.pipe(
     ofType(SELECT_INDEX),
-    map(action => push(`/${state$.value.challenges.current}/${action.payload}`))
+    map(action =>
+      push(`/${state$.value.challenges.current.id}/${action.payload}`)
+    )
   );
 
 export default combineEpics(
@@ -136,5 +159,6 @@ export default combineEpics(
   initChallengesEpic,
   fetchUserEpic,
   createChallengeEpic,
+  fetchChallengeEpic,
   selectIndexEpic
 );
