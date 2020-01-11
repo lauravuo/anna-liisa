@@ -1,33 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Box, Text } from 'grommet';
+
+import DetailsComponent from '../components/details';
+import { addBook } from '../store/actions';
 
 const Details = ({
   match: {
     params: { index }
   },
   model,
-  challengeName
+  challengeName,
+  doAddBook
 }) => {
-  const header = model ? `${model[index].nbr} ${model[index].name}` : '';
+  const header = model ? `${model[index].nbr}: ${model[index].name}` : '';
   return (
-    <Box>
-      <Link to="/">{challengeName}</Link>
-      <Box direction="row">
-        <Text>{header}</Text>
-      </Box>
-    </Box>
+    <DetailsComponent
+      rootName={challengeName}
+      header={header}
+      onAddBook={doAddBook}
+    />
   );
 };
 
 Details.propTypes = {
-  user: PropTypes.object
+  match: PropTypes.object.isRequired,
+  model: PropTypes.arrayOf(PropTypes.object),
+  challengeName: PropTypes.string.isRequired,
+  doAddBook: PropTypes.func.isRequired
 };
 
 Details.defaultProps = {
-  user: null
+  model: null
 };
 
 const mapStateWithProps = ({
@@ -41,4 +45,8 @@ const mapStateWithProps = ({
   user
 });
 
-export default connect(mapStateWithProps)(Details);
+const mapDispatchWithProps = dispatch => ({
+  doAddBook: data => dispatch(addBook(data))
+});
+
+export default connect(mapStateWithProps, mapDispatchWithProps)(Details);

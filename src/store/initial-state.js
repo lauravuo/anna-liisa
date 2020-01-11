@@ -5,7 +5,10 @@ export default {
   user: null,
   error: null,
   challenges: {
-    current: null,
+    current: {
+      id: null,
+      data: null
+    },
     // TODO: current id, current data
     all: null
   },

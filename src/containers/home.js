@@ -13,10 +13,8 @@ const Home = ({
   model,
   doSelectIndex
 }) => (
-  <Box gap="small" fill="horizontal" align="center">
-    <Button label="Create challenge" onClick={doCreateChallenge} />
-    <Button label="Join challenge" />
-    {current && (
+  <Box gap="large" fill="horizontal" align="center">
+    {current.id && (
       <Tabs>
         {all.map(challenge => (
           <Tab key={challenge} title={challenge}>
@@ -30,6 +28,10 @@ const Home = ({
         ))}
       </Tabs>
     )}
+    <Box direction="row" gap="medium">
+      <Button label="Create challenge" onClick={doCreateChallenge} />
+      <Button label="Join challenge" />
+    </Box>
   </Box>
 );
 

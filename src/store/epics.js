@@ -54,7 +54,7 @@ const initChallengesEpic = (action$, state$) =>
   action$.pipe(
     ofType(SET_USER, CREATE_CHALLENGE_FULFILLED),
     switchMap(() =>
-      !state$.value.challenges.current && state$.value.user
+      !state$.value.challenges.current.id && state$.value.user
         ? from(
             firebase
               .firestore()

@@ -74,3 +74,17 @@ export const selectIndex = payload => ({
   type: SELECT_INDEX,
   payload
 });
+
+export const ADD_BOOK = 'ADD_BOOK';
+
+export const addBook = payload => ({
+  type: ADD_BOOK,
+  payload
+});
+
+export const ADD_BOOK_FULFILLED = 'ADD_BOOK_FULFILLED';
+
+export const addBookFulfilled = payload => ({
+  type: ADD_BOOK_FULFILLED,
+  payload
+});
