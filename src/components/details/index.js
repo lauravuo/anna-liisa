@@ -9,7 +9,7 @@ const Add = styled(AddIcon)`
   cursor: pointer;
 `;
 
-const Details = ({ header, rootName, onAddBook }) => {
+const Details = ({ header, rootName, onAddBook, index, books }) => {
   const [isAddShown, showAdd] = useState(false);
   const [name, setName] = useState('');
   const [author, setAuthor] = useState('');
@@ -19,6 +19,9 @@ const Details = ({ header, rootName, onAddBook }) => {
       <Box direction="row">
         <Text>{header}</Text>
       </Box>
+      {books.map(book => (
+        <Box key={book.created}>{book.name}</Box>
+      ))}
       <Add onClick={() => showAdd(!isAddShown)} />
       {isAddShown && (
         <Layer
@@ -52,7 +55,7 @@ const Details = ({ header, rootName, onAddBook }) => {
                 disabled={!name || !author}
                 onClick={() => {
                   showAdd(false);
-                  onAddBook({ name, author });
+                  onAddBook({ name, author, index });
                 }}
               />
             </Box>
@@ -66,7 +69,9 @@ const Details = ({ header, rootName, onAddBook }) => {
 Details.propTypes = {
   rootName: PropTypes.string.isRequired,
   header: PropTypes.string.isRequired,
-  onAddBook: PropTypes.func.isRequired
+  onAddBook: PropTypes.func.isRequired,
+  index: PropTypes.string.isRequired,
+  books: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default Details;

@@ -88,3 +88,10 @@ export const addBookFulfilled = payload => ({
   type: ADD_BOOK_FULFILLED,
   payload
 });
+
+export const JOIN_CHALLENGE_FULFILLED = 'JOIN_CHALLENGE_FULFILLED';
+
+export const joinChallengeFulfilled = payload => ({
+  type: JOIN_CHALLENGE_FULFILLED,
+  payload
+});

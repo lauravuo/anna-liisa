@@ -36,7 +36,7 @@ export const user = (state = initialState.user, action) => {
 export const challenges = (state = initialState.challenges, action) => {
   switch (action.type) {
     case SET_CHALLENGES: {
-      const count = action.payload.length;
+      const count = action.payload ? action.payload.length : 0;
       return {
         current: {
           id: count > 0 ? action.payload[count - 1] : null,

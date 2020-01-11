@@ -11,14 +11,29 @@ const Details = ({
   },
   model,
   challengeName,
-  doAddBook
+  doAddBook,
+  users
 }) => {
   const header = model ? `${model[index].nbr}: ${model[index].name}` : '';
+  const indexBooks = Object.keys(users).reduce((result, item) => {
+    const userData = users[item];
+    const books = userData.books
+      .filter(book => book.index === index)
+      .map(book => ({
+        userId: userData.id,
+        userName: userData.name,
+        thumbnail: userData.thumbnail,
+        ...book
+      }));
+    return [...result, ...books];
+  }, []);
   return (
     <DetailsComponent
       rootName={challengeName}
       header={header}
       onAddBook={doAddBook}
+      index={index || '-1'}
+      books={indexBooks}
     />
   );
 };
@@ -27,7 +42,8 @@ Details.propTypes = {
   match: PropTypes.object.isRequired,
   model: PropTypes.arrayOf(PropTypes.object),
   challengeName: PropTypes.string.isRequired,
-  doAddBook: PropTypes.func.isRequired
+  doAddBook: PropTypes.func.isRequired,
+  users: PropTypes.object.isRequired
 };
 
 Details.defaultProps = {
@@ -42,7 +58,7 @@ const mapStateWithProps = ({
 }) => ({
   challengeName: data ? data.name : '',
   model: data ? data.model.entries : null,
-  user
+  users: data.users || {}
 });
 
 const mapDispatchWithProps = dispatch => ({
