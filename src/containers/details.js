@@ -14,17 +14,22 @@ const Details = ({
   doAddBook,
   users
 }) => {
-  const header = model ? `${model[index].nbr}: ${model[index].name}` : '';
+  const entry = model
+    ? model.find(item => index.toString() === item.nbr)
+    : null;
+  const header = entry ? `${entry.nbr}: ${entry.name}` : '';
   const indexBooks = Object.keys(users).reduce((result, item) => {
     const userData = users[item];
-    const books = userData.books
-      .filter(book => book.index === index)
-      .map(book => ({
-        userId: userData.id,
-        userName: userData.name,
-        thumbnail: userData.thumbnail,
-        ...book
-      }));
+    const books = userData
+      ? userData.books
+          .filter(book => book.index === index)
+          .map(book => ({
+            userId: userData.id,
+            userName: userData.name,
+            userThumbnail: userData.thumbnail,
+            ...book
+          }))
+      : [];
     return [...result, ...books];
   }, []);
   return (
@@ -51,14 +56,13 @@ Details.defaultProps = {
 };
 
 const mapStateWithProps = ({
-  user,
   challenges: {
     current: { data }
   }
 }) => ({
   challengeName: data ? data.name : '',
   model: data ? data.model.entries : null,
-  users: data.users || {}
+  users: data ? data.users : {}
 });
 
 const mapDispatchWithProps = dispatch => ({

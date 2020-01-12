@@ -59,6 +59,14 @@ export const joinChallenge = code => ({
   payload: code
 });
 
+export const JOIN_CHALLENGE_PARTICIPANTS_FULFILLED =
+  'JOIN_CHALLENGE_PARTICIPANTS_FULFILLED';
+
+export const joinChallengeParticipantsFulfilled = payload => ({
+  type: JOIN_CHALLENGE_PARTICIPANTS_FULFILLED,
+  payload
+});
+
 export const CREATE_CHALLENGE_FULFILLED = 'CREATE_CHALLENGE_FULFILLED';
 
 export const createChallengeFulfilled = payload => ({

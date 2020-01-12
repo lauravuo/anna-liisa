@@ -29,7 +29,9 @@ import {
   addBookFulfilled,
   joinChallengeFulfilled,
   JOIN_CHALLENGE_FULFILLED,
-  JOIN_CHALLENGE
+  JOIN_CHALLENGE,
+  joinChallengeParticipantsFulfilled,
+  JOIN_CHALLENGE_PARTICIPANTS_FULFILLED
 } from './actions';
 
 const defaultModel = CONFIG.modelId;
@@ -126,10 +128,41 @@ const fetchUserEpic = action$ =>
     )
   );
 
+const joinChallengeParticipantsEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(JOIN_CHALLENGE),
+    filter(action => !state$.value.challenges.all.includes(action.payload)),
+    mergeMap(action => {
+      return from(
+        firebase
+          .firestore()
+          .collection('challenges')
+          .doc(action.payload)
+          .get()
+      );
+    }),
+    mergeMap(doc => {
+      const user = firebase.auth().currentUser;
+      const data = doc.data();
+      return from(
+        firebase
+          .firestore()
+          .collection('challenges')
+          .doc(doc.id)
+          .set(
+            {
+              participants: [...data.participants, user.uid]
+            },
+            { merge: true }
+          )
+      ).pipe(map(() => joinChallengeParticipantsFulfilled(doc.id)));
+    }),
+    catchError(error => of(operationRejected(JOIN_CHALLENGE, error)))
+  );
+
 const joinChallengeEpic = (action$, state$) =>
   action$.pipe(
-    ofType(CREATE_CHALLENGE_FULFILLED, JOIN_CHALLENGE),
-    filter(action => !state$.challenges.all.includes(action.payload)),
+    ofType(CREATE_CHALLENGE_FULFILLED, JOIN_CHALLENGE_PARTICIPANTS_FULFILLED),
     mergeMap(action => {
       const user = firebase.auth().currentUser;
       return from(
@@ -147,12 +180,10 @@ const joinChallengeEpic = (action$, state$) =>
       ).pipe(
         mergeMap(() => {
           const id = action.payload;
-          const challengeIds = state$.value.challenges.all
-            ? [
-                ...state$.value.challenges.all.map(challenge => challenge.id),
-                id
-              ]
-            : [id];
+          const challengeIds = [
+            ...state$.value.challenges.all.map(challenge => challenge.id),
+            id
+          ];
           return from(
             firebase
               .firestore()
@@ -212,6 +243,10 @@ const addBookEpic = (action$, state$) =>
       const user = firebase.auth().currentUser;
       const challengeId = state$.value.challenges.current.id;
       const userData = state$.value.challenges.current.data.users[user.uid];
+      const book = {
+        ...action.payload,
+        created: new Date()
+      };
       return from(
         firebase
           .firestore()
@@ -221,17 +256,10 @@ const addBookEpic = (action$, state$) =>
           .doc(user.uid)
           .set({
             ...userData,
-            books: [
-              ...userData.books,
-              {
-                ...action.payload,
-                created: new Date()
-              }
-            ]
+            books: [...userData.books, book]
           })
-      );
+      ).pipe(map(() => addBookFulfilled({ user, book })));
     }),
-    map(() => addBookFulfilled()),
     catchError(error => of(operationRejected(ADD_BOOK, error)))
   );
 
@@ -240,6 +268,7 @@ export default combineEpics(
   initChallengesEpic,
   fetchUserEpic,
   joinChallengeEpic,
+  joinChallengeParticipantsEpic,
   createChallengeEpic,
   fetchChallengeEpic,
   selectIndexEpic,

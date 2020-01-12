@@ -9,8 +9,7 @@ export default {
       id: null,
       data: null
     },
-    // TODO: current id, current data
-    all: null
+    all: []
   },
   books: [],
   model: null

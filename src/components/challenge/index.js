@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, DataTable, Text } from 'grommet';
+import User from '../user';
 
-const Challenge = ({ challenge, onClickIndex }) => (
+const Challenge = ({ challenge, onClickIndex, books }) => (
   <Box>
     <DataTable
       columns={[
@@ -14,10 +15,53 @@ const Challenge = ({ challenge, onClickIndex }) => (
         {
           property: 'name',
           header: <Text>Name</Text>
+        },
+        {
+          property: 'readers',
+          header: <Text>Readers</Text>,
+          render: datum => {
+            const booksForIndex = books[datum.nbr];
+            const users = booksForIndex
+              ? booksForIndex.reduce((result, item) => {
+                  const found = result.find(
+                    b => b.user.displayName === item.user.displayName
+                  );
+                  return found
+                    ? [
+                        ...result.filter(
+                          b => b.user.displayName !== item.user.displayName
+                        ),
+                        {
+                          ...found,
+                          user: {
+                            ...found.user,
+                            count: (found.user.count || 1) + 1
+                          }
+                        }
+                      ]
+                    : [...result, item];
+                }, [])
+              : [];
+            return (
+              <Box direction="row" align="center">
+                {users.map(book => (
+                  <User
+                    title={
+                      book.user.count
+                        ? `${book.user.count} books`
+                        : `${book.author}: ${book.name}`
+                    }
+                    key={book.user.displayName}
+                    user={book.user}
+                  />
+                ))}
+              </Box>
+            );
+          }
         }
       ]}
       data={challenge}
-      onClickRow={event => onClickIndex(event.index)}
+      onClickRow={event => onClickIndex(event.index + 1)}
     />
   </Box>
 );

@@ -6,7 +6,7 @@ import * as firebaseui from 'firebaseui';
 
 import { Box } from 'grommet';
 
-const Login = ({ onUserLogin }) => {
+const Login = ({ onUserLogin, user }) => {
   const doLogin = () => {
     const uiConfig = {
       signInSuccessUrl: CONFIG.redirectURL,
@@ -17,12 +17,12 @@ const Login = ({ onUserLogin }) => {
       }
     };
     const auth = firebase.auth();
-    auth.onAuthStateChanged(user => {
-      onUserLogin(user);
+    auth.onAuthStateChanged(u => {
+      onUserLogin(u);
     });
 
     const ui = new firebaseui.auth.AuthUI(auth);
-    if (!ui.isPendingRedirect()) {
+    if (!ui.isPendingRedirect() || user === null) {
       ui.start('#firebaseui-auth-container', uiConfig);
     }
   };

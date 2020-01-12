@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Box, Button, Tab, Tabs } from 'grommet';
+import { Box, Tab, Tabs } from 'grommet';
 
 import {
   buttonPress,
@@ -17,11 +17,11 @@ const Home = ({
   doCreateChallenge,
   doJoinChallenge,
   challenges: { all, current },
-  model,
-  doSelectIndex
+  doSelectIndex,
+  books
 }) => (
   <Box gap="large" fill="horizontal" align="center">
-    {current.id && (
+    {current.id ? (
       <Tabs>
         {all.map(challenge => (
           <Tab key={challenge} title={challenge}>
@@ -29,30 +29,55 @@ const Home = ({
               <Challenge
                 challenge={current.data.model.entries}
                 onClickIndex={doSelectIndex}
+                books={books}
               />
             )}
           </Tab>
         ))}
       </Tabs>
+    ) : (
+      <Toolbar
+        onCreateChallenge={doCreateChallenge}
+        onJoinChallenge={doJoinChallenge}
+      />
     )}
-    <Toolbar
-      onCreateChallenge={doCreateChallenge}
-      onJoinChallenge={doJoinChallenge}
-    />
   </Box>
 );
 
 Home.propTypes = {
   challenges: PropTypes.object.isRequired,
-  model: PropTypes.arrayOf(PropTypes.object).isRequired,
   doCreateChallenge: PropTypes.func.isRequired,
   doJoinChallenge: PropTypes.func.isRequired,
-  doSelectIndex: PropTypes.func.isRequired
+  doSelectIndex: PropTypes.func.isRequired,
+  books: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({ challenges, model }) => ({
+const mapStateToProps = ({ challenges }) => ({
   challenges,
-  model: model || []
+  books: challenges.current.data
+    ? Object.keys(challenges.current.data.users).reduce((result, item) => {
+        const user = challenges.current.data.users[item];
+        return {
+          ...result,
+          ...user.books.reduce(
+            (booksResult, book) => ({
+              ...booksResult,
+              [book.index]: [
+                ...(booksResult[book.index] || []),
+                {
+                  user: {
+                    displayName: user.name,
+                    photoURL: user.thumbnail
+                  },
+                  ...book
+                }
+              ]
+            }),
+            {}
+          )
+        };
+      }, {})
+    : {}
 });
 
 const mapDispatchToProps = dispatch => ({

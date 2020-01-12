@@ -5,6 +5,8 @@ import { Box, Button, Heading, Layer, Text, TextInput } from 'grommet';
 import { Add as AddIcon } from 'grommet-icons';
 import styled from 'styled-components';
 
+import User from '../user';
+
 const Add = styled(AddIcon)`
   cursor: pointer;
 `;
@@ -17,10 +19,26 @@ const Details = ({ header, rootName, onAddBook, index, books }) => {
     <Box>
       <Link to="/">{rootName}</Link>
       <Box direction="row">
-        <Text>{header}</Text>
+        <Heading level="2">{header}</Heading>
       </Box>
       {books.map(book => (
-        <Box key={book.created}>{book.name}</Box>
+        <Box direction="row" key={book.created} align="center" gap="medium">
+          <Box direction="row" align="center">
+            <User
+              user={{
+                photoURL: book.userThumbnail,
+                displayName: book.userThumbnail
+              }}
+            />
+            <Text>{book.userName}</Text>
+          </Box>
+          <Text>
+            {book.author}: {book.name}
+          </Text>
+          <Text>
+            {new Date(book.created.seconds * 1000).toLocaleDateString()}
+          </Text>
+        </Box>
       ))}
       <Add onClick={() => showAdd(!isAddShown)} />
       {isAddShown && (

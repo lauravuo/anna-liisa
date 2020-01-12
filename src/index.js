@@ -25,7 +25,7 @@ const store = configureStore();
 firebase.initializeApp(CONFIG.firebaseConfig);
 
 const LoginContainer = connect(
-  () => ({}),
+  ({ user }) => ({ user }),
   dispatch => ({
     onUserLogin: user => dispatch(setUser(user))
   })

@@ -10,7 +10,8 @@ import {
   SET_MODEL,
   SET_CHALLENGES,
   SET_CURRENT_CHALLENGE,
-  JOIN_CHALLENGE_FULFILLED
+  JOIN_CHALLENGE_FULFILLED,
+  ADD_BOOK_FULFILLED
 } from './actions';
 import initialState from './initial-state';
 
@@ -61,6 +62,38 @@ export const challenges = (state = initialState.challenges, action) => {
         current: {
           ...state.current,
           id: action.payload
+        },
+        all: [
+          ...state.all.filter(item => item !== action.payload),
+          action.payload
+        ]
+      };
+    }
+    case ADD_BOOK_FULFILLED: {
+      const userId = action.payload.user.uid;
+      const userData = state.current.data.users[userId];
+      return {
+        ...state,
+        current: {
+          ...state.current,
+          data: {
+            ...state.current.data,
+            users: {
+              ...state.current.data.users,
+              [userId]: {
+                ...userData,
+                books: [
+                  ...userData.books,
+                  {
+                    ...action.payload.book,
+                    created: {
+                      seconds: action.payload.book.created.getTime() / 1000
+                    }
+                  }
+                ]
+              }
+            }
+          }
         }
       };
     }
