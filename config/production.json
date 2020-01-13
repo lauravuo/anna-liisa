@@ -1,3 +1,4 @@
 {
-  "setting": "prod-setting"
+  "setting": "prod-setting",
+  "redirectURL": "https://anna-liisa.firebaseapp.com"
 }

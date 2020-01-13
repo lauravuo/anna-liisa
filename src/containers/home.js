@@ -19,30 +19,31 @@ const Home = ({
   challenges: { all, current },
   doSelectIndex,
   books
-}) => (
-  <Box gap="large" fill="horizontal" align="center">
-    {current.id ? (
-      <Tabs>
-        {all.map(challenge => (
-          <Tab key={challenge} title={challenge}>
-            {current.data && (
+}) => {
+  return (
+    <Box gap="large" fill="horizontal" align="center">
+      {current.data ? (
+        <Tabs>
+          {/* TODO: render challenge names */}
+          {all.map(challenge => (
+            <Tab key={challenge} title={current.data.name}>
               <Challenge
                 challenge={current.data.model.entries}
                 onClickIndex={doSelectIndex}
                 books={books}
               />
-            )}
-          </Tab>
-        ))}
-      </Tabs>
-    ) : (
-      <Toolbar
-        onCreateChallenge={doCreateChallenge}
-        onJoinChallenge={doJoinChallenge}
-      />
-    )}
-  </Box>
-);
+            </Tab>
+          ))}
+        </Tabs>
+      ) : (
+        <Toolbar
+          onCreateChallenge={doCreateChallenge}
+          onJoinChallenge={doJoinChallenge}
+        />
+      )}
+    </Box>
+  );
+};
 
 Home.propTypes = {
   challenges: PropTypes.object.isRequired,
@@ -55,28 +56,25 @@ Home.propTypes = {
 const mapStateToProps = ({ challenges }) => ({
   challenges,
   books: challenges.current.data
-    ? Object.keys(challenges.current.data.users).reduce((result, item) => {
-        const user = challenges.current.data.users[item];
-        return {
-          ...result,
-          ...user.books.reduce(
-            (booksResult, book) => ({
-              ...booksResult,
-              [book.index]: [
-                ...(booksResult[book.index] || []),
-                {
-                  user: {
-                    displayName: user.name,
-                    photoURL: user.thumbnail
-                  },
-                  ...book
-                }
-              ]
-            }),
-            {}
-          )
-        };
-      }, {})
+    ? Object.keys(challenges.current.data.users)
+        .reduce((result, item) => {
+          const user = challenges.current.data.users[item];
+          const userData = {
+            id: user.id,
+            displayName: user.name,
+            photoURL: user.thumbnail
+          };
+          return [
+            ...result,
+            ...user.books.map(book => ({ user: userData, ...book }))
+          ];
+        }, [])
+        .reduce((result, item) => {
+          return {
+            ...result,
+            [item.index]: [...(result[item.index] || []), item]
+          };
+        }, {})
     : {}
 });
 

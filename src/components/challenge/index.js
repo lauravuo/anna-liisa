@@ -23,14 +23,10 @@ const Challenge = ({ challenge, onClickIndex, books }) => (
             const booksForIndex = books[datum.nbr];
             const users = booksForIndex
               ? booksForIndex.reduce((result, item) => {
-                  const found = result.find(
-                    b => b.user.displayName === item.user.displayName
-                  );
+                  const found = result.find(b => b.user.id === item.user.id);
                   return found
                     ? [
-                        ...result.filter(
-                          b => b.user.displayName !== item.user.displayName
-                        ),
+                        ...result.filter(b => b.user.id !== item.user.id),
                         {
                           ...found,
                           user: {
@@ -51,7 +47,7 @@ const Challenge = ({ challenge, onClickIndex, books }) => (
                         ? `${book.user.count} books`
                         : `${book.author}: ${book.name}`
                     }
-                    key={book.user.displayName}
+                    key={book.user.id}
                     user={book.user}
                   />
                 ))}

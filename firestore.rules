@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+ 		match /challenges/{challenge} {
+      allow get: if request.auth.uid != null;
+      allow list: if false;
+    }
+    match /challenges/{challenge} {
+      allow create: if request.auth.uid != null;
+      allow update: if request.auth.uid != null;
+      allow delete: if request.auth.uid == challenge.owner;
+    }
+ 		match /challenges/{challenge}/users/{user} {
+      allow get: if challenge.participants.includes(request.auth.uid);
+      allow list: if challenge.participants.includes(request.auth.uid);
+    }
+    match /challenges/{challenge}/users/{user} {
+      allow create: if challenge.participants.includes(request.auth.uid);
+      allow update: if request.auth.uid == user;
+      allow delete: if request.auth.uid == user;
+    }
+ 		match /users/{user} {
+      allow get: if request.auth.uid == user;
+      allow list: if false;
+    }
+    match /users/{user} {
+      allow create: if request.auth.uid == user;
+      allow update: if request.auth.uid == user;
+      allow delete: if request.auth.uid == user;
+    }
+    match /{document=**} {
+      allow read, write: if request.auth.uid != null;
+    }
+  }
+}
