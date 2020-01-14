@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Box, Button, Heading, Layer, Text, TextInput } from 'grommet';
 import { Add as AddIcon } from 'grommet-icons';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 import User from '../user';
 
@@ -15,6 +16,7 @@ const Details = ({ header, rootName, onAddBook, index, books }) => {
   const [isAddShown, showAdd] = useState(false);
   const [name, setName] = useState('');
   const [author, setAuthor] = useState('');
+  const { t, i18n } = useTranslation();
   return (
     <Box>
       <Link to="/">{rootName}</Link>
@@ -48,28 +50,28 @@ const Details = ({ header, rootName, onAddBook, index, books }) => {
         >
           <Box margin="medium" gap="medium">
             <Box>
-              <Heading level="3">Add book</Heading>
+              <Heading level="3">{t('Add book')}</Heading>
               <Text>{header}</Text>
             </Box>
             <Box direction="row" align="center" gap="small">
-              <Text>Name:</Text>
+              <Text>{`${t('Name')}:`}</Text>
               <TextInput
                 maxLength="256"
                 onChange={event => setName(event.target.value)}
               />
             </Box>
             <Box direction="row" align="center" gap="small">
-              <Text>Writer:</Text>
+              <Text>{`${t('Author')}:`}</Text>
               <TextInput
                 maxLength="256"
                 onChange={event => setAuthor(event.target.value)}
               />
             </Box>
             <Box direction="row" gap="xsmall" justify="end">
-              <Button label="close" onClick={() => showAdd(false)} />
+              <Button label={t('close')} onClick={() => showAdd(false)} />
               <Button
                 primary
-                label="add"
+                label={t('add')}
                 disabled={!name || !author}
                 onClick={() => {
                   showAdd(false);

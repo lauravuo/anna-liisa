@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Button, Heading, Layer, Text, TextInput } from 'grommet';
+import { useTranslation } from 'react-i18next';
 
 const Dialog = ({ header, fieldName, okLabel, onOk, onDismiss }) => {
   const [value, setValue] = useState('');
+  const { t, i18n } = useTranslation();
   return (
     <Layer onEsc={onDismiss} onClickOutside={onDismiss}>
       <Box margin="medium" gap="medium">
@@ -18,7 +20,7 @@ const Dialog = ({ header, fieldName, okLabel, onOk, onDismiss }) => {
           />
         </Box>
         <Box direction="row" gap="xsmall" justify="end">
-          <Button label="close" onClick={onDismiss} />
+          <Button label={t('close')} onClick={onDismiss} />
           <Button
             primary
             label={okLabel}

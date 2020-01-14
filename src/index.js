@@ -7,6 +7,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import { Grommet, Box } from 'grommet';
 import firebase from 'firebase/app';
 
+import './i18n';
 import configureStore, { history } from './store';
 
 import Login from './components/login';
@@ -17,7 +18,6 @@ import Home from './containers/home';
 import Details from './containers/details';
 import theme from './theme';
 import { setUser } from './store/actions';
-
 import User from './components/user';
 
 const store = configureStore();
