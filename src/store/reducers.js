@@ -44,7 +44,8 @@ export const challenges = (state = initialState.challenges, action) => {
           id: count > 0 ? action.payload[count - 1] : null,
           data: null
         },
-        all: action.payload
+        all: action.payload,
+        loading: action.payload.length > 0
       };
     }
     case SET_CURRENT_CHALLENGE: {
@@ -52,7 +53,8 @@ export const challenges = (state = initialState.challenges, action) => {
         ...state,
         current: {
           ...state.current,
-          data: action.payload
+          data: action.payload,
+          loading: false
         }
       };
     }

@@ -18,11 +18,12 @@ const Home = ({
   doJoinChallenge,
   challenges: { all, current },
   doSelectIndex,
-  books
+  books,
+  loading
 }) => {
   return (
     <Box gap="large" fill="horizontal" align="center">
-      {current.data ? (
+      {current.data && (
         <Tabs>
           {/* TODO: render challenge names */}
           {all.map(challenge => (
@@ -35,7 +36,8 @@ const Home = ({
             </Tab>
           ))}
         </Tabs>
-      ) : (
+      )}
+      {!current.data && !loading && (
         <Toolbar
           onCreateChallenge={doCreateChallenge}
           onJoinChallenge={doJoinChallenge}
@@ -50,7 +52,8 @@ Home.propTypes = {
   doCreateChallenge: PropTypes.func.isRequired,
   doJoinChallenge: PropTypes.func.isRequired,
   doSelectIndex: PropTypes.func.isRequired,
-  books: PropTypes.object.isRequired
+  books: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = ({ challenges }) => ({
@@ -75,7 +78,8 @@ const mapStateToProps = ({ challenges }) => ({
             [item.index]: [...(result[item.index] || []), item]
           };
         }, {})
-    : {}
+    : {},
+  loading: challenges.loading
 });
 
 const mapDispatchToProps = dispatch => ({

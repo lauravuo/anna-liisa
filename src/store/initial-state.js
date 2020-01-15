@@ -9,7 +9,8 @@ export default {
       id: null,
       data: null
     },
-    all: []
+    all: [],
+    loading: true
   },
   books: [],
   model: null
