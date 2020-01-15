@@ -5,6 +5,20 @@ import 'firebase/auth';
 import * as firebaseui from 'firebaseui';
 
 import { Box } from 'grommet';
+import styled from 'styled-components';
+
+const AuthContainer = styled.div`
+  animation: fade-in 2s ease-in-out forwards;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+`;
 
 const Login = ({ onUserLogin, user }) => {
   const doLogin = () => {
@@ -31,7 +45,7 @@ const Login = ({ onUserLogin, user }) => {
 
   return (
     <Box>
-      <div id="firebaseui-auth-container" />
+      <AuthContainer id="firebaseui-auth-container" />
     </Box>
   );
 };
