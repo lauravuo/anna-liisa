@@ -68,7 +68,7 @@ const initChallengesEpic = (action$, state$) =>
               .doc(`users/${state$.value.user.uid}`)
               .get()
           ).pipe(
-            map(q => setChallenges(q.data().challenges)),
+            map(q => setChallenges(q.data() ? q.data().challenges : [])),
             catchError(error => of(operationRejected(SET_CHALLENGES, error)))
           )
         : empty()

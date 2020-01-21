@@ -12,7 +12,8 @@ const Details = ({
   model,
   challengeName,
   doAddBook,
-  users
+  users,
+  userId
 }) => {
   const entry = model
     ? model.find(item => index.toString() === item.nbr)
@@ -24,6 +25,7 @@ const Details = ({
       ? userData.books
           .filter(book => book.index === index)
           .map(book => ({
+            userCurrent: userData.id === userId,
             userId: userData.id,
             userName: userData.name,
             userThumbnail: userData.thumbnail,
@@ -48,7 +50,8 @@ Details.propTypes = {
   model: PropTypes.arrayOf(PropTypes.object),
   challengeName: PropTypes.string.isRequired,
   doAddBook: PropTypes.func.isRequired,
-  users: PropTypes.object.isRequired
+  users: PropTypes.object.isRequired,
+  userId: PropTypes.string.isRequired
 };
 
 Details.defaultProps = {
@@ -58,11 +61,13 @@ Details.defaultProps = {
 const mapStateWithProps = ({
   challenges: {
     current: { data }
-  }
+  },
+  user
 }) => ({
   challengeName: data ? data.name : '',
   model: data ? data.model.entries : null,
-  users: data ? data.users : {}
+  users: data ? data.users : {},
+  userId: user.uid
 });
 
 const mapDispatchWithProps = dispatch => ({

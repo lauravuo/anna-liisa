@@ -34,19 +34,14 @@ const LoginContainer = connect(
 const UI = ({ user }) => (
   <Grommet theme={theme}>
     {user ? (
-      <Box direction="row" fill="horizontal" justify="between">
-        <Box fill="horizontal">
-          <Error />
-          <NavBar />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/:challenge/:index" component={Details} />
-            <Route component={NoMatch} />
-          </Switch>
-        </Box>
-        <Box gap="small">
-          <User user={user} />
-        </Box>
+      <Box fill="horizontal">
+        <Error />
+        <NavBar user={user} />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/:challenge/:index" component={Details} />
+          <Route component={NoMatch} />
+        </Switch>
       </Box>
     ) : (
       <LoginContainer />

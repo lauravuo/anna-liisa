@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { bool } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Box, Button, Heading, Layer, Text, TextInput } from 'grommet';
-import { Add as AddIcon } from 'grommet-icons';
+import { Add as AddIcon, Edit as ModifyIcon } from 'grommet-icons';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import User from '../user';
+import EditDialog from '../edit-dialog';
 
 const Add = styled(AddIcon)`
   cursor: pointer;
 `;
 
+const Modify = styled(ModifyIcon)`
+  cursor: pointer;
+`;
+
 const Details = ({ header, rootName, onAddBook, index, books }) => {
   const [isAddShown, showAdd] = useState(false);
-  const [name, setName] = useState('');
-  const [author, setAuthor] = useState('');
+  const [editIndex, showEdit] = useState(-1);
   const { t, i18n } = useTranslation();
   return (
     <Box>
@@ -23,8 +27,11 @@ const Details = ({ header, rootName, onAddBook, index, books }) => {
       <Box direction="row">
         <Heading level="2">{header}</Heading>
       </Box>
-      {books.map(book => (
-        <Box direction="row" key={book.created} align="center" gap="medium">
+      {books.map((book, bookIndex) => (
+        <Box direction="column" key={book.created} align="center" gap="medium">
+          <Text>
+            {book.author}: {book.name}
+          </Text>
           <Box direction="row" align="center">
             <User
               user={{
@@ -35,52 +42,38 @@ const Details = ({ header, rootName, onAddBook, index, books }) => {
             <Text>{book.userName}</Text>
           </Box>
           <Text>
-            {book.author}: {book.name}
-          </Text>
-          <Text>
             {new Date(book.created.seconds * 1000).toLocaleDateString()}
           </Text>
+          {book.userCurrent && (
+            <Box>
+              <Modify onClick={() => showEdit(bookIndex)} />
+            </Box>
+          )}
         </Box>
       ))}
       <Add onClick={() => showAdd(!isAddShown)} />
       {isAddShown && (
-        <Layer
-          onEsc={() => showAdd(false)}
-          onClickOutside={() => showAdd(false)}
-        >
-          <Box margin="medium" gap="medium">
-            <Box>
-              <Heading level="3">{t('Add book')}</Heading>
-              <Text>{header}</Text>
-            </Box>
-            <Box direction="row" align="center" gap="small">
-              <Text>{`${t('Name')}:`}</Text>
-              <TextInput
-                maxLength="256"
-                onChange={event => setName(event.target.value)}
-              />
-            </Box>
-            <Box direction="row" align="center" gap="small">
-              <Text>{`${t('Author')}:`}</Text>
-              <TextInput
-                maxLength="256"
-                onChange={event => setAuthor(event.target.value)}
-              />
-            </Box>
-            <Box direction="row" gap="xsmall" justify="end">
-              <Button label={t('close')} onClick={() => showAdd(false)} />
-              <Button
-                primary
-                label={t('add')}
-                disabled={!name || !author}
-                onClick={() => {
-                  showAdd(false);
-                  onAddBook({ name, author, index });
-                }}
-              />
-            </Box>
-          </Box>
-        </Layer>
+        <EditDialog
+          id={index}
+          onClose={() => showAdd(false)}
+          onSave={book =>
+            onAddBook({ name: book.name, author: book.author, index: book.id })
+          }
+          title={header}
+          saveLabel={t('add')}
+        />
+      )}
+      {editIndex >= 0 && (
+        <EditDialog
+          id={index}
+          onClose={() => showEdit(-1)}
+          onSave={() => {}}
+          onDelete={() => {}}
+          title={header}
+          saveLabel={t('save')}
+          defaultAuthor={books[editIndex].author}
+          defaultName={books[editIndex].name}
+        />
       )}
     </Box>
   );

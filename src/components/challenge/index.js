@@ -19,7 +19,7 @@ const Challenge = ({ challenge, onClickIndex, books }) => {
           {
             property: 'name',
             header: <Text>{t('Name')}</Text>
-          },
+          } /*,
           {
             property: 'readers',
             header: <Text>{t('Readers')}</Text>,
@@ -58,7 +58,7 @@ const Challenge = ({ challenge, onClickIndex, books }) => {
                 </Box>
               );
             }
-          }
+          }*/
         ]}
         data={challenge}
         onClickRow={event => onClickIndex(event.index + 1)}

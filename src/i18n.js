@@ -20,7 +20,7 @@ const resources = {
   },
   fi: {
     translation: {
-      Number: 'Numero',
+      Number: '#',
       Name: 'Nimi',
       Readers: 'Lukijat',
       'Add book': 'Lisää kirja',
