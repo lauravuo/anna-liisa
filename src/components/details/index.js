@@ -17,10 +17,19 @@ const Modify = styled(ModifyIcon)`
   cursor: pointer;
 `;
 
-const Details = ({ header, rootName, onAddBook, index, books }) => {
+const Details = ({
+  header,
+  rootName,
+  onAddBook,
+  onEditBook,
+  onDeleteBook,
+  index,
+  books
+}) => {
   const [isAddShown, showAdd] = useState(false);
   const [editIndex, showEdit] = useState(-1);
   const { t, i18n } = useTranslation();
+  const editItem = editIndex >= 0 && books[editIndex];
   return (
     <Box>
       <Link to="/">{rootName}</Link>
@@ -54,25 +63,33 @@ const Details = ({ header, rootName, onAddBook, index, books }) => {
       <Add onClick={() => showAdd(!isAddShown)} />
       {isAddShown && (
         <EditDialog
-          id={index}
+          idStr={index}
           onClose={() => showAdd(false)}
           onSave={book =>
             onAddBook({ name: book.name, author: book.author, index: book.id })
           }
           title={header}
           saveLabel={t('add')}
+          header={t('Add book')}
         />
       )}
       {editIndex >= 0 && (
         <EditDialog
-          id={index}
+          idObj={editItem.created}
           onClose={() => showEdit(-1)}
-          onSave={() => {}}
-          onDelete={() => {}}
+          onSave={book =>
+            onEditBook({
+              name: book.name,
+              author: book.author,
+              created: book.id
+            })
+          }
+          onDelete={book => onDeleteBook(book.id)}
           title={header}
           saveLabel={t('save')}
-          defaultAuthor={books[editIndex].author}
-          defaultName={books[editIndex].name}
+          defaultAuthor={editItem.author}
+          defaultName={editItem.name}
+          header={t('Edit book')}
         />
       )}
     </Box>

@@ -31,7 +31,9 @@ import {
   JOIN_CHALLENGE_FULFILLED,
   JOIN_CHALLENGE,
   joinChallengeParticipantsFulfilled,
-  JOIN_CHALLENGE_PARTICIPANTS_FULFILLED
+  JOIN_CHALLENGE_PARTICIPANTS_FULFILLED,
+  EDIT_BOOK,
+  editBookFulfilled
 } from './actions';
 
 const defaultModel = CONFIG.modelId;
@@ -263,6 +265,42 @@ const addBookEpic = (action$, state$) =>
     catchError(error => of(operationRejected(ADD_BOOK, error)))
   );
 
+const editBookEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(EDIT_BOOK),
+    mergeMap(action => {
+      const user = firebase.auth().currentUser;
+      const challengeId = state$.value.challenges.current.id;
+      const userData = state$.value.challenges.current.data.users[user.uid];
+      const book = {
+        ...userData.books.find(item => item.created === action.payload.created),
+        author: action.payload.author,
+        name: action.payload.name
+      };
+      const newBooks = [
+        ...userData.books.filter(
+          item => item.created !== action.payload.created
+        ),
+        book
+      ];
+      return from(
+        firebase
+          .firestore()
+          .collection('challenges')
+          .doc(challengeId)
+          .collection('users')
+          .doc(user.uid)
+          .set(
+            {
+              books: newBooks
+            },
+            { merge: true }
+          )
+      ).pipe(map(() => editBookFulfilled({ user, book })));
+    }),
+    catchError(error => of(operationRejected(EDIT_BOOK, error)))
+  );
+
 export default combineEpics(
   initModelEpic,
   initChallengesEpic,
@@ -272,5 +310,6 @@ export default combineEpics(
   createChallengeEpic,
   fetchChallengeEpic,
   selectIndexEpic,
-  addBookEpic
+  addBookEpic,
+  editBookEpic
 );

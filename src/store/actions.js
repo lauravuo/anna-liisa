@@ -104,6 +104,34 @@ export const addBookFulfilled = payload => ({
   payload
 });
 
+export const EDIT_BOOK = 'EDIT_BOOK';
+
+export const editBook = payload => ({
+  type: EDIT_BOOK,
+  payload
+});
+
+export const EDIT_BOOK_FULFILLED = 'EDIT_BOOK_FULFILLED';
+
+export const editBookFulfilled = payload => ({
+  type: EDIT_BOOK_FULFILLED,
+  payload
+});
+
+export const DELETE_BOOK = 'DELETE_BOOK';
+
+export const deleteBook = payload => ({
+  type: DELETE_BOOK,
+  payload
+});
+
+export const DELETE_BOOK_FULFILLED = 'DELETE_BOOK_FULFILLED';
+
+export const deleteBookFulfilled = payload => ({
+  type: DELETE_BOOK_FULFILLED,
+  payload
+});
+
 export const JOIN_CHALLENGE_FULFILLED = 'JOIN_CHALLENGE_FULFILLED';
 
 export const joinChallengeFulfilled = payload => ({

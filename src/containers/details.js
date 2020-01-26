@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import DetailsComponent from '../components/details';
-import { addBook } from '../store/actions';
+import { addBook, editBook, deleteBook } from '../store/actions';
 
 const Details = ({
   match: {
@@ -12,6 +12,8 @@ const Details = ({
   model,
   challengeName,
   doAddBook,
+  doEditBook,
+  doDeleteBook,
   users,
   userId
 }) => {
@@ -39,6 +41,8 @@ const Details = ({
       rootName={challengeName}
       header={header}
       onAddBook={doAddBook}
+      onEditBook={doEditBook}
+      onDeleteBook={doDeleteBook}
       index={index || '-1'}
       books={indexBooks}
     />
@@ -71,7 +75,9 @@ const mapStateWithProps = ({
 });
 
 const mapDispatchWithProps = dispatch => ({
-  doAddBook: data => dispatch(addBook(data))
+  doAddBook: data => dispatch(addBook(data)),
+  doEditBook: data => dispatch(editBook(data)),
+  doDeleteBook: data => dispatch(deleteBook(data)),
 });
 
 export default connect(mapStateWithProps, mapDispatchWithProps)(Details);

@@ -8,7 +8,9 @@ const EditDialog = ({
   onSave,
   onDelete,
   saveLabel,
-  id,
+  idStr,
+  idObj,
+  header,
   title,
   defaultAuthor,
   defaultName
@@ -20,7 +22,7 @@ const EditDialog = ({
     <Layer onEsc={onClose} onClickOutside={onClose}>
       <Box margin="medium" gap="medium">
         <Box>
-          <Heading level="3">{t('Add book')}</Heading>
+          <Heading level="3">{header}</Heading>
           <Text>{title}</Text>
         </Box>
         <Box direction="row" align="center" gap="small">
@@ -48,7 +50,7 @@ const EditDialog = ({
             disabled={!name || !author}
             onClick={() => {
               onClose();
-              onSave({ name, author, id });
+              onSave({ name, author, id: idStr || idObj });
             }}
           />
         </Box>
