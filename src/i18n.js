@@ -10,12 +10,17 @@ const resources = {
       Name: 'Name',
       Readers: 'Readers',
       'Add book': 'Add book',
+      'Edit book': 'Edit book',
       Author: 'Author',
       add: 'add',
       close: 'close',
+      delete: 'delete',
+      save: 'save',
       'Create challenge': 'Create challenge',
       'Join challenge': 'Join challenge',
-      Code: 'Code'
+      Code: 'Code',
+      'Share this code to others for joining the challenge':
+        'Share this code to others for joining the challenge'
     }
   },
   fi: {
@@ -24,12 +29,17 @@ const resources = {
       Name: 'Nimi',
       Readers: 'Lukijat',
       'Add book': 'Lisää kirja',
+      'Edit book': 'Muokkaa tietoja',
       Author: 'Kirjailija',
       add: 'lisää',
       close: 'sulje',
+      delete: 'poista',
+      save: 'tallenna',
       'Create challenge': 'Luo haaste',
       'Join challenge': 'Liity haasteeseen',
-      Code: 'Koodi'
+      Code: 'Koodi',
+      'Share this code to others for joining the challenge':
+        'Uudet lukijat voivat liittyä haasteeseen tällä koodilla'
     }
   }
 };

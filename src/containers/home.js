@@ -29,6 +29,7 @@ const Home = ({
           {all.map(challenge => (
             <Tab key={challenge} title={current.data.name}>
               <Challenge
+                id={challenge}
                 challenge={current.data.model.entries}
                 onClickIndex={doSelectIndex}
                 books={books}

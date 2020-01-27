@@ -8,9 +8,9 @@ export const RoundBox = styled(Box)`
   object-fit: cover;
 `;
 
-const User = ({ user, title }) => (
+const User = ({ user, title, size }) => (
   <Box direction="row" align="center" gap="xsmall" margin="small">
-    <RoundBox height="xxsmall" width="xxsmall" round="xsmall">
+    <RoundBox height={size} width={size} round="xsmall">
       <Image
         title={title || user.displayName}
         fit="contain"
@@ -22,11 +22,13 @@ const User = ({ user, title }) => (
 
 User.propTypes = {
   user: PropTypes.object.isRequired,
-  title: PropTypes.string
+  title: PropTypes.string,
+  size: PropTypes.string
 };
 
 User.defaultProps = {
-  title: ''
+  title: '',
+  size: 'xxsmall'
 };
 
 export default User;

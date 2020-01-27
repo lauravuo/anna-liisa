@@ -9,8 +9,14 @@ import { useTranslation } from 'react-i18next';
 import User from '../user';
 import EditDialog from '../edit-dialog';
 
-const Add = styled(AddIcon)`
-  cursor: pointer;
+const ParentBox = styled(Box)`
+  position: relative;
+`;
+
+const ButtonContainer = styled(Box)`
+  position: absolute;
+  right: 0;
+  top: 0;
 `;
 
 const Modify = styled(ModifyIcon)`
@@ -31,36 +37,45 @@ const Details = ({
   const { t, i18n } = useTranslation();
   const editItem = editIndex >= 0 && books[editIndex];
   return (
-    <Box>
+    <Box gap="large">
       <Link to="/">{rootName}</Link>
       <Box direction="row">
         <Heading level="2">{header}</Heading>
       </Box>
       {books.map((book, bookIndex) => (
-        <Box direction="column" key={book.created} align="center" gap="medium">
+        <ParentBox direction="column" key={book.created} gap="small">
           <Text>
             {book.author}: {book.name}
           </Text>
-          <Box direction="row" align="center">
-            <User
-              user={{
-                photoURL: book.userThumbnail,
-                displayName: book.userThumbnail
-              }}
-            />
-            <Text>{book.userName}</Text>
-          </Box>
-          <Text>
-            {new Date(book.created.seconds * 1000).toLocaleDateString()}
-          </Text>
-          {book.userCurrent && (
-            <Box>
-              <Modify onClick={() => showEdit(bookIndex)} />
+          <Box direction="row" justify="between" align="center" margin="small">
+            <Box direction="row" align="center">
+              <User
+                size="xxxsmall"
+                user={{
+                  photoURL: book.userThumbnail,
+                  displayName: book.userThumbnail
+                }}
+              />
+              <Text size="small">{book.userName}</Text>
             </Box>
+            <Text size="small">
+              {new Date(book.created.seconds * 1000).toLocaleDateString()}
+            </Text>
+          </Box>
+          {book.userCurrent && (
+            <ButtonContainer>
+              <Modify onClick={() => showEdit(bookIndex)} />
+            </ButtonContainer>
           )}
-        </Box>
+        </ParentBox>
       ))}
-      <Add onClick={() => showAdd(!isAddShown)} />
+      <Box margin="large">
+        <Button
+          icon={<AddIcon />}
+          label={t('Add book')}
+          onClick={() => showAdd(!isAddShown)}
+        />
+      </Box>
       {isAddShown && (
         <EditDialog
           idStr={index}

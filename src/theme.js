@@ -195,6 +195,7 @@ export default {
     },
     spacing: '24px',
     size: {
+      xxxsmall: '36px',
       xxsmall: '48px',
       xsmall: '96px',
       small: '192px',
