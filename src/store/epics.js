@@ -33,7 +33,10 @@ import {
   joinChallengeParticipantsFulfilled,
   JOIN_CHALLENGE_PARTICIPANTS_FULFILLED,
   EDIT_BOOK,
-  editBookFulfilled
+  editBookFulfilled,
+  DELETE_BOOK,
+  deleteBookFulfilled,
+  deleteBook
 } from './actions';
 
 const defaultModel = CONFIG.modelId;
@@ -301,6 +304,34 @@ const editBookEpic = (action$, state$) =>
     catchError(error => of(operationRejected(EDIT_BOOK, error)))
   );
 
+const deleteBookEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(DELETE_BOOK),
+    mergeMap(action => {
+      const user = firebase.auth().currentUser;
+      const challengeId = state$.value.challenges.current.id;
+      const userData = state$.value.challenges.current.data.users[user.uid];
+      const newBooks = userData.books.filter(
+        item => item.created !== action.payload
+      );
+      return from(
+        firebase
+          .firestore()
+          .collection('challenges')
+          .doc(challengeId)
+          .collection('users')
+          .doc(user.uid)
+          .set(
+            {
+              books: newBooks
+            },
+            { merge: true }
+          )
+      ).pipe(map(() => deleteBookFulfilled({ user, books: newBooks })));
+    }),
+    catchError(error => of(operationRejected(DELETE_BOOK, error)))
+  );
+
 export default combineEpics(
   initModelEpic,
   initChallengesEpic,
@@ -311,5 +342,6 @@ export default combineEpics(
   fetchChallengeEpic,
   selectIndexEpic,
   addBookEpic,
-  editBookEpic
+  editBookEpic,
+  deleteBookEpic
 );

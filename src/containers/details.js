@@ -77,7 +77,7 @@ const mapStateWithProps = ({
 const mapDispatchWithProps = dispatch => ({
   doAddBook: data => dispatch(addBook(data)),
   doEditBook: data => dispatch(editBook(data)),
-  doDeleteBook: data => dispatch(deleteBook(data)),
+  doDeleteBook: data => dispatch(deleteBook(data))
 });
 
 export default connect(mapStateWithProps, mapDispatchWithProps)(Details);

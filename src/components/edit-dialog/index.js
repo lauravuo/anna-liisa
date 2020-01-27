@@ -42,7 +42,16 @@ const EditDialog = ({
           />
         </Box>
         <Box direction="row" gap="xsmall" justify="end">
-          {onDelete && <Button label={t('delete')} onClick={onDelete} />}
+          {onDelete && (
+            <Button
+              label={t('delete')}
+              onClick={() => {
+                console.log('DELETE');
+                onClose();
+                onDelete({ id: idStr || idObj });
+              }}
+            />
+          )}
           <Button label={t('close')} onClick={onClose} />
           <Button
             primary
@@ -64,14 +73,17 @@ EditDialog.propTypes = {
   onSave: PropTypes.func.isRequired,
   onDelete: PropTypes.func,
   saveLabel: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  idStr: PropTypes.string,
+  idObj: PropTypes.object,
   title: PropTypes.string.isRequired,
   defaultAuthor: PropTypes.string.isRequired,
   defaultName: PropTypes.string.isRequired
 };
 
 EditDialog.defaultProps = {
-  onDelete: null
+  onDelete: null,
+  idStr: null,
+  idObj: null
 };
 
 export default EditDialog;
