@@ -37,6 +37,30 @@ export const user = (state = initialState.user, action) => {
   }
 };
 
+const getBooks = data => {
+  return data
+    ? Object.keys(data.users)
+        .reduce((result, item) => {
+          const user = data.users[item];
+          const userData = {
+            id: user.id,
+            displayName: user.name,
+            photoURL: user.thumbnail
+          };
+          return [
+            ...result,
+            ...user.books.map(book => ({ user: userData, ...book }))
+          ];
+        }, [])
+        .reduce((result, item) => {
+          return {
+            ...result,
+            [item.index]: [...(result[item.index] || []), item]
+          };
+        }, {})
+    : {};
+};
+
 export const challenges = (state = initialState.challenges, action) => {
   switch (action.type) {
     case SET_CHALLENGES: {
@@ -44,7 +68,8 @@ export const challenges = (state = initialState.challenges, action) => {
       return {
         current: {
           id: count > 0 ? action.payload[count - 1] : null,
-          data: null
+          data: null,
+          books: getBooks(null)
         },
         all: action.payload,
         loading: action.payload.length > 0
@@ -56,6 +81,7 @@ export const challenges = (state = initialState.challenges, action) => {
         current: {
           ...state.current,
           data: action.payload,
+          books: getBooks(action.payload),
           loading: false
         }
       };
@@ -76,75 +102,81 @@ export const challenges = (state = initialState.challenges, action) => {
     case ADD_BOOK_FULFILLED: {
       const userId = action.payload.user.uid;
       const userData = state.current.data.users[userId];
+      const newData = {
+        ...state.current.data,
+        users: {
+          ...state.current.data.users,
+          [userId]: {
+            ...userData,
+            books: [
+              ...userData.books,
+              {
+                ...action.payload.book,
+                created: {
+                  seconds: action.payload.book.created.getTime() / 1000
+                }
+              }
+            ]
+          }
+        }
+      };
       return {
         ...state,
         current: {
           ...state.current,
-          data: {
-            ...state.current.data,
-            users: {
-              ...state.current.data.users,
-              [userId]: {
-                ...userData,
-                books: [
-                  ...userData.books,
-                  {
-                    ...action.payload.book,
-                    created: {
-                      seconds: action.payload.book.created.getTime() / 1000
-                    }
-                  }
-                ]
-              }
-            }
-          }
+          data: newData,
+          books: getBooks(newData)
         }
       };
     }
     case EDIT_BOOK_FULFILLED: {
       const userId = action.payload.user.uid;
       const userData = state.current.data.users[userId];
+      const newData = {
+        ...state.current.data,
+        users: {
+          ...state.current.data.users,
+          [userId]: {
+            ...userData,
+            books: [
+              ...userData.books.filter(
+                item => item.created !== action.payload.book.created
+              ),
+              {
+                ...action.payload.book
+              }
+            ]
+          }
+        }
+      };
       return {
         ...state,
         current: {
           ...state.current,
-          data: {
-            ...state.current.data,
-            users: {
-              ...state.current.data.users,
-              [userId]: {
-                ...userData,
-                books: [
-                  ...userData.books.filter(
-                    item => item.created !== action.payload.book.created
-                  ),
-                  {
-                    ...action.payload.book
-                  }
-                ]
-              }
-            }
-          }
+          data: newData,
+          books: getBooks(newData)
         }
       };
     }
     case DELETE_BOOK_FULFILLED: {
       const userId = action.payload.user.uid;
       const userData = state.current.data.users[userId];
+      const newData = {
+        ...state.current.data,
+        users: {
+          ...state.current.data.users,
+          [userId]: {
+            ...userData,
+            books: action.payload.books
+          }
+        }
+      };
       return {
         ...state,
         current: {
           ...state.current,
-          data: {
-            ...state.current.data,
-            users: {
-              ...state.current.data.users,
-              [userId]: {
-                ...userData,
-                books: action.payload.books
-              }
-            }
-          }
+          data: newData,
+          books: getBooks(newData)
         }
       };
     }

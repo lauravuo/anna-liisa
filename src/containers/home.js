@@ -12,6 +12,7 @@ import {
 } from '../store/actions';
 import Challenge from '../components/challenge';
 import Toolbar from '../components/toolbar';
+import Search from './search';
 
 const Home = ({
   doCreateChallenge,
@@ -28,6 +29,7 @@ const Home = ({
           {/* TODO: render challenge names */}
           {all.map(challenge => (
             <Tab key={challenge} title={current.data.name}>
+              <Search />
               <Challenge
                 id={challenge}
                 challenge={current.data.model.entries}
@@ -59,27 +61,7 @@ Home.propTypes = {
 
 const mapStateToProps = ({ challenges }) => ({
   challenges,
-  books: challenges.current.data
-    ? Object.keys(challenges.current.data.users)
-        .reduce((result, item) => {
-          const user = challenges.current.data.users[item];
-          const userData = {
-            id: user.id,
-            displayName: user.name,
-            photoURL: user.thumbnail
-          };
-          return [
-            ...result,
-            ...user.books.map(book => ({ user: userData, ...book }))
-          ];
-        }, [])
-        .reduce((result, item) => {
-          return {
-            ...result,
-            [item.index]: [...(result[item.index] || []), item]
-          };
-        }, {})
-    : {},
+  books: challenges.current.books,
   loading: challenges.loading
 });
 

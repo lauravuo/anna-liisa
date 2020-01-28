@@ -11,8 +11,8 @@ const Toolbar = ({ onCreateChallenge, onJoinChallenge }) => {
   const { t, i18n } = useTranslation();
   return (
     <Box direction="row" gap="medium">
-      <Button label="Create challenge" onClick={() => showCreate(true)} />
-      <Button label="Join challenge" onClick={() => showJoin(true)} />
+      <Button label={t('Create challenge')} onClick={() => showCreate(true)} />
+      <Button label={t('Join challenge')} onClick={() => showJoin(true)} />
       {isCreateShown && (
         <Dialog
           header={t('Create challenge')}

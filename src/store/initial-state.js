@@ -7,7 +7,8 @@ export default {
   challenges: {
     current: {
       id: null,
-      data: null
+      data: null,
+      books: {}
     },
     all: [],
     loading: true

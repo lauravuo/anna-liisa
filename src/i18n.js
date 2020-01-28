@@ -20,7 +20,8 @@ const resources = {
       'Join challenge': 'Join challenge',
       Code: 'Code',
       'Share this code to others for joining the challenge':
-        'Share this code to others for joining the challenge'
+        'Share this code to others for joining the challenge',
+      'search placeholder': 'No matches found'
     }
   },
   fi: {
@@ -39,7 +40,8 @@ const resources = {
       'Join challenge': 'Liity haasteeseen',
       Code: 'Koodi',
       'Share this code to others for joining the challenge':
-        'Uudet lukijat voivat liittyä haasteeseen tällä koodilla'
+        'Uudet lukijat voivat liittyä haasteeseen tällä koodilla',
+      'search placeholder': 'Ei tuloksia'
     }
   }
 };
