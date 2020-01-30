@@ -10,6 +10,7 @@ import Icon from '../../../assets/annaliisa.png';
 
 const Img = styled.img`
   width: 6rem;
+  height: 4.5rem;
   margin-top: 1rem;
   margin-left: 1rem;
 `;
