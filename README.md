@@ -1,7 +1,6 @@
-# Project template for React app
+# [Anna Liisa](https://fi.wikipedia.org/wiki/Anna_Liisa)
 
-[![CircleCI](https://circleci.com/gh/lauravuo/react-project-template.svg?style=svg)](https://circleci.com/gh/lauravuo/react-project-template)
+[![CircleCI](https://circleci.com/gh/lauravuo/anna-liisa.svg?style=svg)](https://circleci.com/gh/lauravuo/anna-liisa)
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/lauravuo/react-project-template.svg)](https://greenkeeper.io/)
+Anna Liisa is a social reading diary for [Helmet reading challenge](https://www.helmet.fi/fi-FI/Tapahtumat_ja_vinkit/Uutispalat/Helmetlukuhaaste_2020(198681))
 
-Template for React app setup
