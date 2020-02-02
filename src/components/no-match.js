@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '../../../assets/baseline_error_black_18dp.png';
+import Icon from '../../assets/baseline_error_black_18dp.png';
 
 export default () => (
   <div>

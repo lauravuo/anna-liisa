@@ -6,8 +6,8 @@ import { Add as AddIcon, Edit as ModifyIcon } from 'grommet-icons';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import User from '../user';
-import EditDialog from '../edit-dialog';
+import User from './user';
+import EditDialog from './edit-dialog';
 
 const ParentBox = styled(Box)`
   position: relative;

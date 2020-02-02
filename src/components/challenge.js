@@ -4,7 +4,7 @@ import { Box, DataTable, Text } from 'grommet';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-import User from '../user';
+import User from './user';
 
 const Table = styled(DataTable)`
   th {

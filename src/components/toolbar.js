@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Box, Button } from 'grommet';
 import { useTranslation } from 'react-i18next';
 
-import Dialog from '../dialog';
+import Dialog from './dialog';
 
 const Toolbar = ({ onCreateChallenge, onJoinChallenge }) => {
   const [isCreateShown, showCreate] = useState(false);

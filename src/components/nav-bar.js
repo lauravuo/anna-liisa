@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 import { Box } from 'grommet';
 
-import User from '../user';
-import Icon from '../../../assets/annaliisa.png';
+import User from './user';
+import Icon from '../../assets/annaliisa.png';
 
 const Img = styled.img`
   width: 6rem;
