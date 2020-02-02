@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import PropTypes, { bool } from 'prop-types';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Box, Button, Heading, Layer, Text, TextInput } from 'grommet';
+import { Box, Button, Heading, Text } from 'grommet';
 import { Add as AddIcon, Edit as ModifyIcon } from 'grommet-icons';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -34,7 +34,7 @@ const Details = ({
 }) => {
   const [isAddShown, showAdd] = useState(false);
   const [editIndex, showEdit] = useState(-1);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const editItem = editIndex >= 0 && books[editIndex];
   return (
     <Box gap="large">
@@ -115,6 +115,8 @@ Details.propTypes = {
   rootName: PropTypes.string.isRequired,
   header: PropTypes.string.isRequired,
   onAddBook: PropTypes.func.isRequired,
+  onEditBook: PropTypes.func.isRequired,
+  onDeleteBook: PropTypes.func.isRequired,
   index: PropTypes.string.isRequired,
   books: PropTypes.arrayOf(PropTypes.object).isRequired
 };

@@ -54,6 +54,8 @@ Details.propTypes = {
   model: PropTypes.arrayOf(PropTypes.object),
   challengeName: PropTypes.string.isRequired,
   doAddBook: PropTypes.func.isRequired,
+  doDeleteBook: PropTypes.func.isRequired,
+  doEditBook: PropTypes.func.isRequired,
   users: PropTypes.object.isRequired,
   userId: PropTypes.string.isRequired
 };

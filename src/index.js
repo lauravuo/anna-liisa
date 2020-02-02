@@ -18,7 +18,6 @@ import Home from './containers/home';
 import Details from './containers/details';
 import theme from './theme';
 import { setUser } from './store/actions';
-import User from './components/user';
 
 const store = configureStore();
 

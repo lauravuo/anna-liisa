@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import { Select as SelectComponent, Box, Text } from 'grommet';
+import { Select as SelectComponent, Box } from 'grommet';
 import { Search as SearchIcon } from 'grommet-icons';
 
 import { selectIndex } from '../store/actions';
@@ -24,7 +24,7 @@ const Container = styled(Box)`
 
 const Search = ({ books, model, doSelectIndex }) => {
   const [options, setOptions] = useState([]);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <Container>
@@ -68,7 +68,9 @@ const Search = ({ books, model, doSelectIndex }) => {
 };
 
 Search.propTypes = {
-  books: PropTypes.arrayOf(PropTypes.object).isRequired
+  books: PropTypes.arrayOf(PropTypes.object).isRequired,
+  doSelectIndex: PropTypes.func.isRequired,
+  model: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 const mapStateToProps = ({ challenges, model }) => ({

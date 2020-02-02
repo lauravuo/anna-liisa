@@ -8,7 +8,7 @@ import Dialog from '../dialog';
 const Toolbar = ({ onCreateChallenge, onJoinChallenge }) => {
   const [isCreateShown, showCreate] = useState(false);
   const [isJoinShown, showJoin] = useState(false);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <Box direction="row" gap="medium">
       <Button label={t('Create challenge')} onClick={() => showCreate(true)} />

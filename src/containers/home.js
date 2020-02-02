@@ -4,12 +4,7 @@ import PropTypes from 'prop-types';
 
 import { Box, Tab, Tabs } from 'grommet';
 
-import {
-  buttonPress,
-  createChallenge,
-  selectIndex,
-  joinChallenge
-} from '../store/actions';
+import { createChallenge, selectIndex, joinChallenge } from '../store/actions';
 import Challenge from '../components/challenge';
 import Toolbar from '../components/toolbar';
 import Search from './search';
@@ -66,7 +61,6 @@ const mapStateToProps = ({ challenges }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  doButtonPress: () => dispatch(buttonPress()),
   doCreateChallenge: value => dispatch(createChallenge(value)),
   doJoinChallenge: value => dispatch(joinChallenge(value)),
   doSelectIndex: index => dispatch(selectIndex(index))

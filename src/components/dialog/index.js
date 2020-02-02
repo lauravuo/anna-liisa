@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 const Dialog = ({ header, fieldName, okLabel, onOk, onDismiss }) => {
   const [value, setValue] = useState('');
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <Layer onEsc={onDismiss} onClickOutside={onDismiss}>
       <Box margin="medium" gap="medium">

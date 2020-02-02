@@ -2,11 +2,8 @@ import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 
 import {
-  BUTTON_PRESSED,
-  FETCH_USER_FULFILLED,
   FETCH_USER_REJECTED,
   SET_USER,
-  CREATE_CHALLENGE_FULFILLED,
   SET_MODEL,
   SET_CHALLENGES,
   SET_CURRENT_CHALLENGE,
@@ -17,19 +14,8 @@ import {
 } from './actions';
 import initialState from './initial-state';
 
-export const button = (state = initialState.button, action) => {
-  switch (action.type) {
-    case BUTTON_PRESSED:
-      return { ...state, pressed: !state.pressed };
-    default:
-      return state;
-  }
-};
-
 export const user = (state = initialState.user, action) => {
   switch (action.type) {
-    case FETCH_USER_FULFILLED:
-      return action.payload;
     case SET_USER:
       return action.payload;
     default:
@@ -41,15 +27,15 @@ const getBooks = data => {
   return data
     ? Object.keys(data.users)
         .reduce((result, item) => {
-          const user = data.users[item];
+          const u = data.users[item];
           const userData = {
-            id: user.id,
-            displayName: user.name,
-            photoURL: user.thumbnail
+            id: u.id,
+            displayName: u.name,
+            photoURL: u.thumbnail
           };
           return [
             ...result,
-            ...user.books.map(book => ({ user: userData, ...book }))
+            ...u.books.map(book => ({ user: userData, ...book }))
           ];
         }, [])
         .reduce((result, item) => {
@@ -212,7 +198,6 @@ export const error = (state = initialState.error, action) => {
 export default history =>
   combineReducers({
     router: connectRouter(history),
-    button,
     user,
     challenges,
     model,

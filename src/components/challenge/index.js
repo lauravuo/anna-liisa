@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 import User from '../user';
-import { challenges } from '../../store/reducers';
 
 const Table = styled(DataTable)`
   th {
@@ -24,7 +23,7 @@ const Footer = styled(Box)`
 `;
 
 const Challenge = ({ id, challenge, onClickIndex, books }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const getUsersForIndex = nbr => {
     const booksForIndex = books[nbr];
     return booksForIndex
@@ -96,7 +95,9 @@ const Challenge = ({ id, challenge, onClickIndex, books }) => {
 
 Challenge.propTypes = {
   challenge: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onClickIndex: PropTypes.func.isRequired
+  onClickIndex: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  books: PropTypes.object.isRequired
 };
 
 export default Challenge;

@@ -28,7 +28,7 @@ const EditDialog = ({
 }) => {
   const [name, setName] = useState(defaultName);
   const [author, setAuthor] = useState(defaultAuthor);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <Layer onEsc={onClose} onClickOutside={onClose}>
       <Box margin="medium" gap="medium">
@@ -94,7 +94,8 @@ EditDialog.propTypes = {
   idObj: PropTypes.object,
   title: PropTypes.string.isRequired,
   defaultAuthor: PropTypes.string.isRequired,
-  defaultName: PropTypes.string.isRequired
+  defaultName: PropTypes.string.isRequired,
+  header: PropTypes.string.isRequired
 };
 
 EditDialog.defaultProps = {
