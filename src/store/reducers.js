@@ -2,7 +2,6 @@ import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 
 import {
-  FETCH_USER_REJECTED,
   SET_USER,
   SET_MODEL,
   SET_CHALLENGES,
@@ -10,7 +9,8 @@ import {
   JOIN_CHALLENGE_FULFILLED,
   ADD_BOOK_FULFILLED,
   EDIT_BOOK_FULFILLED,
-  DELETE_BOOK_FULFILLED
+  DELETE_BOOK_FULFILLED,
+  OPERATION_REJECTED
 } from './actions';
 import initialState from './initial-state';
 
@@ -188,8 +188,8 @@ export const model = (state = initialState.model, action) => {
 
 export const error = (state = initialState.error, action) => {
   switch (action.type) {
-    case FETCH_USER_REJECTED:
-      return { description: 'Failed to fetch user.', reason: action.payload };
+    case OPERATION_REJECTED:
+      return { description: 'Operation failed.', reason: action.payload };
     default:
       return state;
   }

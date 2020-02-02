@@ -11,7 +11,7 @@
     "model": "babel-node ./tools/parse-model",
     "start": "webpack-dev-server --open \"Google Chrome\" --config ./webpack/dev.js",
     "storybook": "start-storybook",
-    "test": "npm run test:lint",
+    "test": "npm run test:lint && npm run test:unit",
     "test:e2e": "cd e2e && make && nightwatch && make stop",
     "test:ci:e2e": "cd e2e && nightwatch",
     "test:lint": "eslint ./src --format codeframe",

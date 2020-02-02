@@ -1,11 +1,3 @@
-export const FETCH_USER_REJECTED = 'FETCH_USER_REJECTED';
-
-export const fetchUserRejected = payload => ({
-  type: FETCH_USER_REJECTED,
-  error: true,
-  payload
-});
-
 export const SET_MODEL = 'SET_MODEL';
 
 export const setModel = model => ({ type: SET_MODEL, payload: model });
