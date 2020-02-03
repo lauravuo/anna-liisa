@@ -116,12 +116,14 @@ const joinChallengeParticipantsEpic = (action$, state$) =>
   action$.pipe(
     ofType(JOIN_CHALLENGE),
     filter(action => !state$.value.challenges.all.includes(action.payload)),
-    mergeMap(action => getFirebaseDoc('challenges', action.payload)),
+    mergeMap(action => {
+      return getFirebaseDoc('challenges', action.payload);
+    }),
     mergeMap(doc => {
       const user = firebase.auth().currentUser;
       const data = doc.data();
       return setFirebaseDoc('challenges', doc.id, {
-        participants: [...data.participants, user.uid]
+        participants: Array.from(new Set([...data.participants, user.uid]))
       }).pipe(map(() => joinChallengeParticipantsFulfilled(doc.id)));
     }),
     catchError(error => of(operationRejected(JOIN_CHALLENGE, error)))
@@ -132,17 +134,16 @@ const joinChallengeEpic = (action$, state$) =>
     ofType(CREATE_CHALLENGE_FULFILLED, JOIN_CHALLENGE_PARTICIPANTS_FULFILLED),
     mergeMap(action => {
       const user = firebase.auth().currentUser;
-      const currentId = state$.value.challenges.current.id;
+      const currentId = action.payload;
       return setUserData(currentId, user.uid, {
         name: user.displayName,
         thumbnail: user.photoURL,
         books: []
       }).pipe(
         mergeMap(() => {
-          const id = action.payload;
           const challengeIds = [
             ...state$.value.challenges.all.map(challenge => challenge.id),
-            id
+            currentId
           ];
           return setFirebaseDoc('users', user.uid, {
             challenges: challengeIds
