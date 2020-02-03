@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Box, Button, Heading, Text } from 'grommet';
-import { Add as AddIcon, Edit as ModifyIcon } from 'grommet-icons';
+import { Add as AddIcon, Edit as ModifyIcon, Validate } from 'grommet-icons';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
@@ -46,35 +46,45 @@ const Details = ({
       <Box direction="row">
         <Heading level="2">{header}</Heading>
       </Box>
-      {books.map((book, bookIndex) => (
-        <ParentBox direction="column" key={book.created} gap="small">
-          <Text>
-            {book.author}: {book.name}
-          </Text>
-          <Box direction="column" margin="small">
-            <Box direction="row" align="top" gap="xsmall">
-              <User
-                size="xxxsmall"
-                user={{
-                  photoURL: book.userThumbnail,
-                  displayName: book.userThumbnail
-                }}
-              />
-
-              {book.comment && <Comment size="small">{book.comment}</Comment>}
+      {books.map((book, bookIndex) => {
+        const created = new Date(book.created.seconds * 1000);
+        return (
+          <ParentBox direction="column" key={book.created} gap="small">
+            <Box direction="row" align="start" gap="xsmall">
+              <Text>
+                {book.author}: {book.name}
+              </Text>
+              {book.recommend && <Validate color="brand" />}
             </Box>
-            <Text size="small">{book.userName}</Text>
-            <Text size="small">
-              {new Date(book.created.seconds * 1000).toLocaleDateString()}
-            </Text>
-          </Box>
-          {book.userCurrent && (
-            <ButtonContainer>
-              <Modify onClick={() => showEdit(bookIndex)} />
-            </ButtonContainer>
-          )}
-        </ParentBox>
-      ))}
+            <Box direction="column" margin="small">
+              <Box direction="row" align="start" gap="xsmall">
+                <User
+                  size="xxxsmall"
+                  user={{
+                    photoURL: book.userThumbnail,
+                    displayName: book.userThumbnail
+                  }}
+                />
+
+                {book.comment && (
+                  <Comment margin="xsmall" size="small">
+                    {book.comment}
+                  </Comment>
+                )}
+              </Box>
+              <Text size="small">
+                {book.userName}, {created.toLocaleDateString()}{' '}
+                {created.toLocaleTimeString()}
+              </Text>
+            </Box>
+            {book.userCurrent && (
+              <ButtonContainer>
+                <Modify onClick={() => showEdit(bookIndex)} />
+              </ButtonContainer>
+            )}
+          </ParentBox>
+        );
+      })}
       <Box margin="large">
         <Button
           icon={<AddIcon />}
@@ -108,6 +118,7 @@ const Details = ({
           defaultAuthor={editItem.author}
           defaultName={editItem.name}
           defaultComment={editItem.comment}
+          defaultRecommend={editItem.recommend}
           header={t('Edit book')}
         />
       )}

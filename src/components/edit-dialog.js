@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Box,
   Button,
+  CheckBox,
   Heading,
   Layer,
   Text,
@@ -13,7 +14,9 @@ import { useTranslation } from 'react-i18next';
 
 import styled from 'styled-components';
 
-const Row = styled(Box)``;
+const Row = styled(Box)`
+  position: relative;
+`;
 
 const EditDialog = ({
   onClose,
@@ -26,11 +29,13 @@ const EditDialog = ({
   title,
   defaultAuthor,
   defaultName,
-  defaultComment
+  defaultComment,
+  defaultRecommend
 }) => {
-  const [name, setName] = useState(defaultName);
-  const [author, setAuthor] = useState(defaultAuthor);
-  const [comment, setComment] = useState(defaultComment);
+  const [name, setName] = useState(defaultName || '');
+  const [author, setAuthor] = useState(defaultAuthor || '');
+  const [comment, setComment] = useState(defaultComment || '');
+  const [recommend, setRecommend] = useState(defaultRecommend || false);
   const { t } = useTranslation();
   return (
     <Layer onEsc={onClose} onClickOutside={onClose}>
@@ -64,6 +69,13 @@ const EditDialog = ({
             onChange={event => setComment(event.target.value)}
           />
         </Row>
+        <Row>
+          <CheckBox
+            checked={recommend}
+            label={t('Recommend')}
+            onChange={event => setRecommend(event.target.checked)}
+          />
+        </Row>
         <Box
           margin="medium"
           direction="row"
@@ -87,7 +99,13 @@ const EditDialog = ({
               disabled={!name || !author}
               onClick={() => {
                 onClose();
-                onSave({ name, author, comment, id: idStr || idObj });
+                onSave({
+                  name,
+                  author,
+                  comment: comment || '',
+                  recommend: recommend || false,
+                  id: idStr || idObj
+                });
               }}
             />
           </Box>
@@ -105,10 +123,18 @@ EditDialog.propTypes = {
   idStr: PropTypes.string,
   idObj: PropTypes.object,
   title: PropTypes.string.isRequired,
-  defaultAuthor: PropTypes.string.isRequired,
-  defaultName: PropTypes.string.isRequired,
-  defaultComment: PropTypes.string.isRequired,
+  defaultAuthor: PropTypes.string,
+  defaultName: PropTypes.string,
+  defaultComment: PropTypes.string,
+  defaultRecommend: PropTypes.bool,
   header: PropTypes.string.isRequired
+};
+
+EditDialog.defaultProps = {
+  defaultAuthor: '',
+  defaultName: '',
+  defaultComment: '',
+  defaultRecommend: false
 };
 
 EditDialog.defaultProps = {
