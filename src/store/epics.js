@@ -51,6 +51,17 @@ const setFirebaseDoc = (collectionName, docId, data) =>
       .set(data, { merge: true })
   );
 
+const setUserData = (challengeId, userId, data) =>
+  from(
+    firebase
+      .firestore()
+      .collection('challenges')
+      .doc(challengeId)
+      .collection('users')
+      .doc(userId)
+      .set(data, { merge: true })
+  );
+
 const defaultModel = CONFIG.modelId;
 
 const initModelEpic = (action$, state$) =>
@@ -121,19 +132,12 @@ const joinChallengeEpic = (action$, state$) =>
     ofType(CREATE_CHALLENGE_FULFILLED, JOIN_CHALLENGE_PARTICIPANTS_FULFILLED),
     mergeMap(action => {
       const user = firebase.auth().currentUser;
-      return from(
-        firebase
-          .firestore()
-          .collection('challenges')
-          .doc(action.payload)
-          .collection('users')
-          .doc(user.uid)
-          .set({
-            name: user.displayName,
-            thumbnail: user.photoURL,
-            books: []
-          })
-      ).pipe(
+      const currentId = state$.value.challenges.current.id;
+      return setUserData(currentId, user.uid, {
+        name: user.displayName,
+        thumbnail: user.photoURL,
+        books: []
+      }).pipe(
         mergeMap(() => {
           const id = action.payload;
           const challengeIds = [
@@ -194,18 +198,9 @@ const addBookEpic = (action$, state$) =>
         ...action.payload,
         created: new Date()
       };
-      return from(
-        firebase
-          .firestore()
-          .collection('challenges')
-          .doc(challengeId)
-          .collection('users')
-          .doc(user.uid)
-          .set({
-            ...userData,
-            books: [...userData.books, book]
-          })
-      ).pipe(map(() => addBookFulfilled({ user, book })));
+      return setUserData(challengeId, user.uid, {
+        books: [...userData.books, book]
+      }).pipe(map(() => addBookFulfilled({ user, book })));
     }),
     catchError(error => of(operationRejected(ADD_BOOK, error)))
   );
@@ -219,8 +214,7 @@ const editBookEpic = (action$, state$) =>
       const userData = state$.value.challenges.current.data.users[user.uid];
       const book = {
         ...userData.books.find(item => item.created === action.payload.created),
-        author: action.payload.author,
-        name: action.payload.name
+        ...action.payload
       };
       const newBooks = [
         ...userData.books.filter(
@@ -228,20 +222,9 @@ const editBookEpic = (action$, state$) =>
         ),
         book
       ];
-      return from(
-        firebase
-          .firestore()
-          .collection('challenges')
-          .doc(challengeId)
-          .collection('users')
-          .doc(user.uid)
-          .set(
-            {
-              books: newBooks
-            },
-            { merge: true }
-          )
-      ).pipe(map(() => editBookFulfilled({ user, book })));
+      return setUserData(challengeId, user.uid, {
+        books: newBooks
+      }).pipe(map(() => editBookFulfilled({ user, book })));
     }),
     catchError(error => of(operationRejected(EDIT_BOOK, error)))
   );
@@ -256,20 +239,9 @@ const deleteBookEpic = (action$, state$) =>
       const newBooks = userData.books.filter(
         item => item.created !== action.payload
       );
-      return from(
-        firebase
-          .firestore()
-          .collection('challenges')
-          .doc(challengeId)
-          .collection('users')
-          .doc(user.uid)
-          .set(
-            {
-              books: newBooks
-            },
-            { merge: true }
-          )
-      ).pipe(map(() => deleteBookFulfilled({ user, books: newBooks })));
+      return setUserData(challengeId, user.uid, {
+        books: newBooks
+      }).pipe(map(() => deleteBookFulfilled({ user, books: newBooks })));
     }),
     catchError(error => of(operationRejected(DELETE_BOOK, error)))
   );

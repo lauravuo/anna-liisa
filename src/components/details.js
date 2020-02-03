@@ -23,6 +23,10 @@ const Modify = styled(ModifyIcon)`
   cursor: pointer;
 `;
 
+const Comment = styled(Text)`
+  font-style: italic;
+`;
+
 const Details = ({
   header,
   rootName,
@@ -47,8 +51,8 @@ const Details = ({
           <Text>
             {book.author}: {book.name}
           </Text>
-          <Box direction="row" justify="between" align="center" margin="small">
-            <Box direction="row" align="center">
+          <Box direction="column" margin="small">
+            <Box direction="row" align="top" gap="xsmall">
               <User
                 size="xxxsmall"
                 user={{
@@ -56,8 +60,10 @@ const Details = ({
                   displayName: book.userThumbnail
                 }}
               />
-              <Text size="small">{book.userName}</Text>
+
+              {book.comment && <Comment size="small">{book.comment}</Comment>}
             </Box>
+            <Text size="small">{book.userName}</Text>
             <Text size="small">
               {new Date(book.created.seconds * 1000).toLocaleDateString()}
             </Text>
@@ -80,9 +86,7 @@ const Details = ({
         <EditDialog
           idStr={index}
           onClose={() => showAdd(false)}
-          onSave={book =>
-            onAddBook({ name: book.name, author: book.author, index: book.id })
-          }
+          onSave={({ id, ...book }) => onAddBook({ index: id, ...book })}
           title={header}
           saveLabel={t('add')}
           header={t('Add book')}
@@ -92,11 +96,10 @@ const Details = ({
         <EditDialog
           idObj={editItem.created}
           onClose={() => showEdit(-1)}
-          onSave={book =>
+          onSave={({ id, ...book }) =>
             onEditBook({
-              name: book.name,
-              author: book.author,
-              created: book.id
+              created: id,
+              ...book
             })
           }
           onDelete={book => onDeleteBook(book.id)}
@@ -104,6 +107,7 @@ const Details = ({
           saveLabel={t('save')}
           defaultAuthor={editItem.author}
           defaultName={editItem.name}
+          defaultComment={editItem.comment}
           header={t('Edit book')}
         />
       )}

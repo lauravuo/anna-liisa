@@ -21,21 +21,23 @@ const Details = ({
     ? model.find(item => index.toString() === item.nbr)
     : null;
   const header = entry ? `${entry.nbr}: ${entry.name}` : '';
-  const indexBooks = Object.keys(users).reduce((result, item) => {
-    const userData = users[item];
-    const books = userData
-      ? userData.books
-          .filter(book => book.index === index)
-          .map(book => ({
-            userCurrent: userData.id === userId,
-            userId: userData.id,
-            userName: userData.name,
-            userThumbnail: userData.thumbnail,
-            ...book
-          }))
-      : [];
-    return [...result, ...books];
-  }, []);
+  const indexBooks = Object.keys(users)
+    .reduce((result, item) => {
+      const userData = users[item];
+      const books = userData
+        ? userData.books
+            .filter(book => book.index === index)
+            .map(book => ({
+              userCurrent: userData.id === userId,
+              userId: userData.id,
+              userName: userData.name,
+              userThumbnail: userData.thumbnail,
+              ...book
+            }))
+        : [];
+      return [...result, ...books];
+    }, [])
+    .sort((a, b) => (a.created < b.created ? -1 : 1));
   return (
     <DetailsComponent
       rootName={challengeName}

@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, Heading, Layer, Text, TextInput } from 'grommet';
+import {
+  Box,
+  Button,
+  Heading,
+  Layer,
+  Text,
+  TextInput,
+  TextArea
+} from 'grommet';
 import { useTranslation } from 'react-i18next';
 
 import styled from 'styled-components';
 
-const Row = styled(Box)`
-  span {
-    flex: 1;
-  }
-  div:last-of-type {
-    flex: 4;
-  }
-`;
+const Row = styled(Box)``;
 
 const EditDialog = ({
   onClose,
@@ -24,10 +25,12 @@ const EditDialog = ({
   header,
   title,
   defaultAuthor,
-  defaultName
+  defaultName,
+  defaultComment
 }) => {
   const [name, setName] = useState(defaultName);
   const [author, setAuthor] = useState(defaultAuthor);
+  const [comment, setComment] = useState(defaultComment);
   const { t } = useTranslation();
   return (
     <Layer onEsc={onClose} onClickOutside={onClose}>
@@ -36,20 +39,29 @@ const EditDialog = ({
           <Heading level="3">{header}</Heading>
           <Text>{title}</Text>
         </Box>
-        <Row direction="row" align="center" gap="small">
-          <Text>{`${t('Name')}:`}</Text>
+        <Row direction="column" align="start" gap="small">
+          <Text size="small">{`${t('Author')}:`}</Text>
+          <TextInput
+            value={author}
+            maxLength="256"
+            onChange={event => setAuthor(event.target.value)}
+          />
+        </Row>
+        <Row direction="column" align="start" gap="small">
+          <Text size="small">{`${t('Name')}:`}</Text>
           <TextInput
             value={name}
             maxLength="256"
             onChange={event => setName(event.target.value)}
           />
         </Row>
-        <Row direction="row" align="center" gap="small">
-          <Text>{`${t('Author')}:`}</Text>
-          <TextInput
-            value={author}
+        <Row direction="column" align="start" gap="small">
+          <Text size="small">{`${t('Comment')}:`}</Text>
+          <TextArea
+            resize={false}
+            value={comment}
             maxLength="256"
-            onChange={event => setAuthor(event.target.value)}
+            onChange={event => setComment(event.target.value)}
           />
         </Row>
         <Box
@@ -75,7 +87,7 @@ const EditDialog = ({
               disabled={!name || !author}
               onClick={() => {
                 onClose();
-                onSave({ name, author, id: idStr || idObj });
+                onSave({ name, author, comment, id: idStr || idObj });
               }}
             />
           </Box>
@@ -95,6 +107,7 @@ EditDialog.propTypes = {
   title: PropTypes.string.isRequired,
   defaultAuthor: PropTypes.string.isRequired,
   defaultName: PropTypes.string.isRequired,
+  defaultComment: PropTypes.string.isRequired,
   header: PropTypes.string.isRequired
 };
 
