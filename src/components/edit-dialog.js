@@ -14,6 +14,10 @@ import { useTranslation } from 'react-i18next';
 
 import styled from 'styled-components';
 
+const Container = styled(Box)`
+  min-height: 30rem;
+`;
+
 const Row = styled(Box)`
   position: relative;
 `;
@@ -39,7 +43,7 @@ const EditDialog = ({
   const { t } = useTranslation();
   return (
     <Layer onEsc={onClose} onClickOutside={onClose}>
-      <Box margin="medium" gap="medium">
+      <Container margin="medium" gap="medium">
         <Box>
           <Heading level="3">{header}</Heading>
           <Text>{title}</Text>
@@ -110,7 +114,7 @@ const EditDialog = ({
             />
           </Box>
         </Box>
-      </Box>
+      </Container>
     </Layer>
   );
 };
