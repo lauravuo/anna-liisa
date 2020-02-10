@@ -8,7 +8,7 @@ import { Box } from 'grommet';
 import styled from 'styled-components';
 
 const AuthContainer = styled.div`
-  animation: fade-in 2s ease-in-out forwards;
+  animation: fade-in 4s ease-in-out forwards;
 
   @keyframes fade-in {
     from {

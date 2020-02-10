@@ -49,7 +49,7 @@ const Details = ({
       {books.map((book, bookIndex) => {
         const created = new Date(book.created.seconds * 1000);
         return (
-          <ParentBox direction="column" key={book.created} gap="small">
+          <ParentBox direction="column" key={book.created.seconds} gap="small">
             <Box direction="row" align="start" gap="xsmall">
               <Text>
                 {book.author}: {book.name}
