@@ -3,12 +3,24 @@ import PropTypes from 'prop-types';
 import { Box, DataTable, Text } from 'grommet';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { Validate } from 'grommet-icons';
 
 import User from './user';
 
 const Table = styled(DataTable)`
   th {
     vertical-align: top;
+  }
+`;
+
+const AvatarContainer = styled(Box)`
+  position: relative;
+  svg {
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    background-color: white;
+    border-radius: 100%;
   }
 `;
 
@@ -36,7 +48,8 @@ const Challenge = ({ id, challenge, onClickIndex, books }) => {
                   ...found,
                   user: {
                     ...found.user,
-                    count: (found.user.count || 1) + 1
+                    count: (found.user.count || 1) + 1,
+                    recommends: found.user.recommends || item.recommend
                   }
                 }
               ]
@@ -64,16 +77,20 @@ const Challenge = ({ id, challenge, onClickIndex, books }) => {
                   <Text>{datum.name}</Text>
                   <Box direction="row" align="center">
                     {users.map(book => (
-                      <Avatar
-                        size="xxxsmall"
-                        title={
-                          book.user.count
-                            ? `${book.user.count} books`
-                            : `${book.author}: ${book.name}`
-                        }
-                        key={book.user.id}
-                        user={book.user}
-                      />
+                      <AvatarContainer key={book.user.id}>
+                        <Avatar
+                          size="xxxsmall"
+                          title={
+                            book.user.count
+                              ? `${book.user.count} books`
+                              : `${book.author}: ${book.name}`
+                          }
+                          user={book.user}
+                        />
+                        {(book.user.recommends || book.recommend) && (
+                          <Validate color="brand" />
+                        )}
+                      </AvatarContainer>
                     ))}
                   </Box>
                 </Box>
