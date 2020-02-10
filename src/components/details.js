@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Box, Button, Heading, Text } from 'grommet';
-import { Add as AddIcon, Edit as ModifyIcon, Validate } from 'grommet-icons';
+import {
+  Add as AddIcon,
+  Edit as ModifyIcon,
+  Validate,
+  LinkPrevious
+} from 'grommet-icons';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
@@ -42,7 +47,11 @@ const Details = ({
   const editItem = editIndex >= 0 && books[editIndex];
   return (
     <Box gap="large">
-      <Link to="/">{rootName}</Link>
+      <Box margin="small">
+        <Link to="/" title={rootName}>
+          <LinkPrevious />
+        </Link>
+      </Box>
       <Box direction="row">
         <Heading level="2">{header}</Heading>
       </Box>
