@@ -11,11 +11,11 @@ service cloud.firestore {
       allow delete: if request.auth.uid == challenge.owner;
     }
     match /challenges/{challenge}/users/{user} {
-      allow get: if challenge.participants.includes(request.auth.uid);
-      allow list: if challenge.participants.includes(request.auth.uid);
+      allow get: if request.auth.uid in get(/databases/$(database)/documents/challenges/$(challenge)).data.participants;
+      allow list: if request.auth.uid in get(/databases/$(database)/documents/challenges/$(challenge)).data.participants;
     }
     match /challenges/{challenge}/users/{user} {
-      allow create: if challenge.participants.includes(request.auth.uid);
+      allow create: if request.auth.uid in get(/databases/$(database)/documents/challenges/$(challenge)).data.participants;
       allow update: if request.auth.uid == user;
       allow delete: if request.auth.uid == user;
     }
@@ -28,8 +28,14 @@ service cloud.firestore {
       allow update: if request.auth.uid == user;
       allow delete: if request.auth.uid == user;
     }
-    match /{document=**} {
-      allow read, write: if request.auth.uid != null;
+    match /challengeModels/{id} {
+      allow get: if request.auth.uid != null;
+      allow list: if false;
+    }
+    match /challengeModels/{id} {
+      allow create: if exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+      allow update: if exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+      allow delete: if exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
   }
 }
