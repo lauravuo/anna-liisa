@@ -8,8 +8,12 @@ export const RoundBox = styled(Box)`
   object-fit: cover;
 `;
 
+export const Container = styled(Box)`
+  min-width: initial;
+`;
+
 const User = ({ user, title, size }) => (
-  <Box direction="row" align="center" gap="xsmall" margin="small">
+  <Container direction="row" align="center" gap="xsmall" margin="small">
     <RoundBox height={size} width={size} round="xsmall">
       <Image
         title={title || user.displayName}
@@ -17,7 +21,7 @@ const User = ({ user, title, size }) => (
         src={user.photoURL}
       />
     </RoundBox>
-  </Box>
+  </Container>
 );
 
 User.propTypes = {

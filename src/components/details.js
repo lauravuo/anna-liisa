@@ -11,8 +11,10 @@ import {
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import User from './user';
+import UserComponent from './user';
 import EditDialog from './edit-dialog';
+
+const User = styled(UserComponent)``;
 
 const ParentBox = styled(Box)`
   position: relative;
@@ -66,7 +68,7 @@ const Details = ({
               {book.recommend && <Validate color="brand" />}
             </Box>
             <Box direction="column" margin="small">
-              <Box direction="row" align="start" gap="xsmall">
+              <Box direction="row" align="start" gap="small">
                 <User
                   size="xxxsmall"
                   user={{
@@ -75,16 +77,16 @@ const Details = ({
                   }}
                 />
 
-                {book.comment && (
-                  <Comment margin="xsmall" size="small">
-                    {book.comment}
-                  </Comment>
-                )}
+                <Box gap="small">
+                  {book.comment && (
+                    <Comment size="small">{book.comment}</Comment>
+                  )}
+                  <Text size="xsmall">
+                    {book.userName}, {created.toLocaleDateString()}{' '}
+                    {created.toLocaleTimeString()}
+                  </Text>
+                </Box>
               </Box>
-              <Text size="small">
-                {book.userName}, {created.toLocaleDateString()}{' '}
-                {created.toLocaleTimeString()}
-              </Text>
             </Box>
             {book.userCurrent && (
               <ButtonContainer>
