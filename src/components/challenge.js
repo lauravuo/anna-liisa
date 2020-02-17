@@ -16,8 +16,10 @@ const Table = styled(DataTable)`
 const AvatarContainer = styled(Box)`
   position: relative;
   svg {
+    width: 20px;
+    height: 20px;
     position: absolute;
-    bottom: 5px;
+    bottom: 0;
     right: 0;
     background-color: white;
     border-radius: 100%;
@@ -88,7 +90,7 @@ const Challenge = ({ id, challenge, onClickIndex, books }) => {
                           user={book.user}
                         />
                         {(book.user.recommends || book.recommend) && (
-                          <Validate color="brand" />
+                          <Validate size="small" color="brand" />
                         )}
                       </AvatarContainer>
                     ))}
