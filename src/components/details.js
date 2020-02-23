@@ -62,10 +62,14 @@ const Details = ({
         return (
           <ParentBox direction="column" key={book.created.seconds} gap="small">
             <Box direction="row" align="start" gap="xsmall">
+              {book.recommend && (
+                <div>
+                  <Validate color="brand" />
+                </div>
+              )}
               <Text>
                 {book.author}: {book.name}
               </Text>
-              {book.recommend && <Validate color="brand" />}
             </Box>
             <Box direction="column" margin="small">
               <Box direction="row" align="start" gap="small">
