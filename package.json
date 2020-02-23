@@ -9,6 +9,7 @@
     "ci:automerge": "circleci-automerge --filter=\"^greenkeeper/\"",
     "deploy": "npm run build && firebase deploy",
     "model": "babel-node ./tools/parse-model",
+    "release": "npm version minor && git push --tags",
     "start": "webpack-dev-server --open \"Google Chrome\" --config ./webpack/dev.js",
     "storybook": "start-storybook",
     "test": "npm run test:lint && npm run test:unit",
