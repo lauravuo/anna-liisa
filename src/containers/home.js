@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import { Box, Tab, Tabs } from 'grommet';
 
@@ -8,31 +9,39 @@ import { createChallenge, selectIndex, joinChallenge } from '../store/actions';
 import Challenge from '../components/challenge';
 import Toolbar from '../components/toolbar';
 import Search from './search';
+import MyBooks from './my-books';
 
 const Home = ({
   doCreateChallenge,
   doJoinChallenge,
-  challenges: { all, current },
+  challenges: { current },
   doSelectIndex,
   books,
-  loading
+  loading,
+  userId
 }) => {
+  const { t } = useTranslation();
   return (
     <Box gap="large" fill="horizontal" align="center">
       {current.data && (
         <Tabs>
-          {/* TODO: render challenge names */}
-          {all.map(challenge => (
-            <Tab key={challenge} title={current.data.name}>
+          <Tab title={t('Challenge')}>
+            <Box>
               <Search />
               <Challenge
-                id={challenge}
+                id={current.id}
                 challenge={current.data.model.entries}
                 onClickIndex={doSelectIndex}
                 books={books}
               />
-            </Tab>
-          ))}
+            </Box>
+          </Tab>
+          <Tab title={t('My Books')}>
+            <MyBooks
+              users={current.data.users}
+              match={{ params: { userId } }}
+            />
+          </Tab>
         </Tabs>
       )}
       {!current.data && !loading && (
@@ -51,13 +60,15 @@ Home.propTypes = {
   doJoinChallenge: PropTypes.func.isRequired,
   doSelectIndex: PropTypes.func.isRequired,
   books: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  userId: PropTypes.string.isRequired
 };
 
-const mapStateToProps = ({ challenges }) => ({
+const mapStateToProps = ({ challenges, user }) => ({
   challenges,
   books: challenges.current.books,
-  loading: challenges.loading
+  loading: challenges.loading,
+  userId: user.uid
 });
 
 const mapDispatchToProps = dispatch => ({

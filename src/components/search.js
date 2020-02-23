@@ -10,10 +10,10 @@ const Select = styled(SelectComponent)``;
 
 const Container = styled(Box)`
   position: sticky;
-  margin-top: -2.5rem;
+  margin-bottom: -2.5rem;
   top: 0;
   right: 0;
-  min-height: 0.5rem;
+  min-height: 1.5rem;
   button {
     box-shadow: none;
   }

@@ -7,6 +7,10 @@ import { Validate } from 'grommet-icons';
 
 import User from './user';
 
+const Container = styled(Box)`
+  margin-top: 1rem;
+`;
+
 const Table = styled(DataTable)`
   th {
     vertical-align: top;
@@ -60,7 +64,7 @@ const Challenge = ({ id, challenge, onClickIndex, books }) => {
       : [];
   };
   return (
-    <Box>
+    <Container>
       <Table
         alignSelf="start"
         columns={[
@@ -108,7 +112,7 @@ const Challenge = ({ id, challenge, onClickIndex, books }) => {
           {t('Share this code to others for joining the challenge')}: {id}
         </Text>
       </Footer>
-    </Box>
+    </Container>
   );
 };
 

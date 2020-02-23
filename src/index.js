@@ -18,6 +18,7 @@ import Home from './containers/home';
 import Details from './containers/details';
 import theme from './theme';
 import { setUser } from './store/actions';
+import MyBooks from './containers/my-books';
 
 const store = configureStore();
 
@@ -39,6 +40,7 @@ const UI = ({ user }) => (
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/:challenge/:index" component={Details} />
+          <Route path="/:userId" component={MyBooks} />
           <Route component={NoMatch} />
         </Switch>
       </Box>

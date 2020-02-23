@@ -23,7 +23,11 @@ const resources = {
       Code: 'Code',
       'Share this code to others for joining the challenge':
         'Share this code to others for joining the challenge',
-      'search placeholder': 'No matches found'
+      'search placeholder': 'No matches found',
+      Challenge: 'Challenge',
+      'My Books': 'My Books',
+      Date: 'Date',
+      Book: 'Book'
     }
   },
   fi: {
@@ -45,7 +49,11 @@ const resources = {
       Code: 'Koodi',
       'Share this code to others for joining the challenge':
         'Uudet lukijat voivat liittyä haasteeseen tällä koodilla',
-      'search placeholder': 'Ei tuloksia'
+      'search placeholder': 'Ei tuloksia',
+      Challenge: 'Haaste',
+      'My Books': 'Kirjani',
+      Date: 'Pvm',
+      Book: 'Teos'
     }
   }
 };
