@@ -21,6 +21,7 @@ const BookList = ({ books }) => {
     <Container>
       <Table
         alignSelf="start"
+        primaryKey="id"
         columns={[
           {
             property: 'index',
@@ -45,8 +46,7 @@ const BookList = ({ books }) => {
                   </Text>
                 </Box>
               );
-            },
-            primary: true
+            }
           }
         ]}
         data={books}

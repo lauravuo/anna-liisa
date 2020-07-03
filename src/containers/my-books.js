@@ -10,9 +10,12 @@ const MyBooks = ({
   },
   users
 }) => {
-  const books = users[userId].books.sort((a, b) =>
-    a.created.seconds < b.created.seconds ? -1 : 1
-  );
+  const books = users[userId].books
+    .sort((a, b) => (a.created.seconds < b.created.seconds ? -1 : 1))
+    .map(item => ({
+      ...item,
+      id: `${item.index}-${item.author}-${item.name}`
+    }));
   return <BookList books={books} />;
 };
 
