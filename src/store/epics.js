@@ -76,7 +76,7 @@ const initModelEpic = (action$, state$) =>
 const initChallengesEpic = (action$, state$) =>
   action$.pipe(
     ofType(SET_USER, JOIN_CHALLENGE_FULFILLED),
-    filter(() => !state$.value.challenges.current.id && state$.value.user),
+    filter(() => state$.value.user),
     switchMap(() => getFirebaseDoc('users', state$.value.user.uid)),
     map(q => setChallenges(q.data() ? q.data().challenges : [])),
     catchError(error => of(operationRejected(SET_CHALLENGES, error)))
@@ -84,7 +84,7 @@ const initChallengesEpic = (action$, state$) =>
 
 const fetchChallengeEpic = (action$, state$) =>
   action$.pipe(
-    ofType(SET_CHALLENGES, JOIN_CHALLENGE_FULFILLED),
+    ofType(SET_CHALLENGES),
     filter(() => state$.value.challenges.current.id),
     mergeMap(() => {
       const currentId = state$.value.challenges.current.id;
