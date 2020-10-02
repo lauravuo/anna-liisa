@@ -1,12 +1,11 @@
 {
   "name": "anna-liisa",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "anna-liisa",
   "homepage": "https://lauravuo.github.io/anna-liisa",
   "main": "src/index.js",
   "scripts": {
     "build": "export NODE_ENV=production && rimraf build/ && webpack --config ./webpack/prod.js",
-    "ci:automerge": "circleci-automerge --filter=\"^greenkeeper/\"",
     "deploy": "npm run build && firebase deploy",
     "model": "babel-node ./tools/parse-model",
     "release": "npm version minor && git push --tags",
@@ -74,7 +73,6 @@
     "babel-loader": "8.0.6",
     "babel-plugin-styled-components": "1.10.6",
     "chromedriver": "79.0.0",
-    "circleci-automerge": "1.1.0",
     "config": "3.2.4",
     "eslint": "6.8.0",
     "eslint-config-airbnb": "18.0.1",

@@ -47,20 +47,6 @@ jobs:
       - store_artifacts:
           path: e2e/reports
 
-  automerge:
-    docker:
-      - image: circleci/node:12.14.0
-
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - npm-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
-      - run: npm ci
-      - run:
-          name: Merge greenkeeper branch
-          command: npm run ci:automerge
-
 workflows:
   version: 2
   test:
@@ -69,9 +55,3 @@ workflows:
       - e2e:
           requires:
             - test
-      - automerge:
-          requires:
-            - e2e
-          filters:
-            branches:
-              only: /greenkeeper\S*/
